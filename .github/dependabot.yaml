@@ -1,0 +1,25 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "wilddog1979"
+    groups:
+      minor-and-patch:
+        applies-to: security-updates
+        patterns:
+          - "@angular*"
+        update-types:
+          - "patch"
+          - "minor"
+    ignore:
+      - dependency-name: "@angular*"
+        update-types: [ "version-update:semver-major" ]
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "wilddog1979"
