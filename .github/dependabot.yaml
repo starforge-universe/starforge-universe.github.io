@@ -6,16 +6,15 @@ updates:
       interval: "weekly"
     reviewers:
       - "wilddog1979"
+    open-pull-requests-limit: 10
     groups:
-      minor-and-patch:
+      angular:
+        applies-to: version-updates
         patterns:
           - "@angular*"
         update-types:
-          - "patch"
           - "minor"
-    ignore:
-      - dependency-name: "@angular*"
-        update-types: [ "version-update:semver-major" ]
+          - "patch"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
