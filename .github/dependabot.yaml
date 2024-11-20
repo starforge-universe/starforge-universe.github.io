@@ -8,7 +8,6 @@ updates:
       - "wilddog1979"
     groups:
       minor-and-patch:
-        applies-to: security-updates
         patterns:
           - "@angular*"
         update-types:
