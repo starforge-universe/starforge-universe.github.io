@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
 import { Subject } from 'rxjs';
@@ -25,7 +24,7 @@ export class AppComponent implements OnInit {
       .pipe(
         filter((status: InteractionStatus) => status === InteractionStatus.None),
         takeUntil(this.destroying$))
-      .subscribe((res) => {
+      .subscribe(() => {
         this.checkAndSetActiveAccount();
       });
   }
