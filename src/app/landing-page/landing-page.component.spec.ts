@@ -24,7 +24,7 @@ describe('LandingPageComponent', () => {
   it(`should render elements`, () => {
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('p').textContent)
-      .toContain(`angular-webapp-template works!`);
+      .toContain(`Welcome to Starforge Universe!`);
   });
 
 });
