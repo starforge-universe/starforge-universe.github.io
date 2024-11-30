@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
 import { Subject } from 'rxjs';
@@ -6,9 +7,10 @@ import { filter, takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-root',
+    imports: [RouterOutlet],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    standalone: false
+    standalone: true
 })
 export class AppComponent implements OnInit {
   title = 'angular-webapp-template';

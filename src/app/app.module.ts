@@ -8,12 +8,10 @@ import { MsalInstanceProvider, MsalGuardConfigProvider, MsalInterceptorConfigPro
 import { MsalService, MsalGuard, MsalBroadcastService, MsalInterceptor, MsalRedirectComponent } from '@azure/msal-angular';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
   imports: [
     AppRoutingModule,
     BrowserModule,
+    AppComponent,
   ],
   providers: [
     /*{
