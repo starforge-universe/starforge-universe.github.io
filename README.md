@@ -25,3 +25,29 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Run this project locally
+
+To create container image, use the following command.
+
+```shell
+docker build -t starforge-universe-webapp .
+```
+
+To start the container, use the following command.
+
+```shell
+docker run -d -p 8000:80 --name starforge-universe-webapp starforge-universe-webapp
+```
+
+Alternatively you can use docker-compose as well.
+
+```shell
+docker-compose up -d
+```
+
+When you are done with local development inspection, you can stop the container.
+
+```shell
+docker-compose down
+```

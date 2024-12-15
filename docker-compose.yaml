@@ -1,0 +1,9 @@
+version: '3'
+services:
+  starforge-universe-webapp:
+    image:  starforge-universe-webapp
+    build: .
+    container_name:  starforge-universe-webapp
+    ports:
+      - "8000:80"
+    restart: always
