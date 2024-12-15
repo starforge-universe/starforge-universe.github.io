@@ -1,0 +1,9 @@
+version: '3'
+services:
+  angular-webapp-template:
+    image:  angular-webapp-template
+    build: .
+    container_name:  angular-webapp-template
+    ports:
+      - "8000:80"
+    restart: always
