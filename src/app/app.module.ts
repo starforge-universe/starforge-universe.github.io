@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app.routes';
-import { AppComponent } from './app.component';
+import { AppComponent } from './components/app.component';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MsalInstanceProvider, MsalGuardConfigProvider, MsalInterceptorConfigProvider } from './msal-settings.provider';
