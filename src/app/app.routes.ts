@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import { StarforgeSurveySwaggerComponent } from './starforge-survey-swagger/starforge-survey-swagger.component';
+import { StarforgeSurveySwaggerComponent } from './components/starforge-survey-swagger/starforge-survey-swagger.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent },
