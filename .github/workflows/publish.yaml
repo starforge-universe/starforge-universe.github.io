@@ -6,28 +6,33 @@ on:
   workflow_dispatch:
 
 jobs:
+  tests:
+    name: 'Tests'
+    uses: ./.github/workflows/__call__checks.yaml
+
   build:
-    name: Build
+    name: 'Build'
+    needs: [tests]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout project sources
+      - name: 'Checkout project sources'
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: 'Setup Node.js'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: Install dependencies
+      - name: 'Install dependencies'
         run: npm install
 
-      - name: Build
+      - name: 'Build'
         run: npm run build
 
-      - name: Configure GitHub Pages
+      - name: 'Configure GitHub Pages'
         uses: actions/configure-pages@v5
 
-      - name: Upload GitHub Pages artifact
+      - name: 'Upload GitHub Pages artifact'
         id: deployment
         uses: actions/upload-pages-artifact@v3
         with:
@@ -35,14 +40,14 @@ jobs:
 
   deploy:
     environment:
-      name: github-pages
+      name: 'github-pages'
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       pages: write
-    needs: build
+    needs: [build]
     steps:
-      - name: Deploy to GitHub Pages
+      - name: 'Deploy to GitHub Pages'
         id: deployment
         uses: actions/deploy-pages@v4
