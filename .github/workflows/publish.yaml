@@ -8,14 +8,14 @@ on:
 jobs:
   tests:
     name: 'Tests'
-    uses: ./.github/workflows/modules/__call__checks.yaml
+    uses: ./.github/workflows/__call__checks.yaml
 
   build:
     name: 'Build'
     needs: [tests]
-    uses: ./.github/workflows/modules/__call__build.yaml
+    uses: ./.github/workflows/__call__build.yaml
 
   publish:
     name: 'Publish'
     needs: [build]
-    uses: ./.github/workflows/modules/__call__publish.yaml
+    uses: ./.github/workflows/__call__publish.yaml

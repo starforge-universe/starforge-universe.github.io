@@ -15,11 +15,11 @@ on:
 jobs:
   tests:
     name: 'Tests'
-    uses: ./.github/workflows/modules/__call__checks.yaml
+    uses: ./.github/workflows/__call__checks.yaml
 
   release:
     name: 'Release'
     needs: [test]
-    uses: ./.github/workflows/modules/__call__release.yaml
+    uses: ./.github/workflows/__call__release.yaml
     with:
       level: ${{ inputs.level }}
