@@ -13,9 +13,9 @@ jobs:
   build:
     name: 'Build'
     needs: [tests]
-    uses: ./.github/workflows/__call_build.yaml
+    uses: ./.github/workflows/__call__build.yaml
 
   publish:
     name: 'Publish'
     needs: [build]
-    uses: ./.github/workflows/__call_publish.yaml
+    uses: ./.github/workflows/__call__publish.yaml
