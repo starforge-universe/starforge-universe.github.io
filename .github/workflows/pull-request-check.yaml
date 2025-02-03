@@ -7,4 +7,4 @@ on:
 jobs:
   checks:
     name: 'Checks'
-    uses: ./.github/workflows/__call__checks.yaml
+    uses: ./.github/workflows/modules/__call__checks.yaml
