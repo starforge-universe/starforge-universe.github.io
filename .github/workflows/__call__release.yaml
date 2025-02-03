@@ -1,4 +1,4 @@
-name: 'Release submodule'
+name: 'Submodule - Release'
 
 on:
   workflow_call:
