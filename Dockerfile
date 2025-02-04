@@ -16,6 +16,6 @@ FROM nginx:1.27.3-alpine-slim
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-COPY --from=build /app/dist/starforge-universe-webapp/browser /usr/share/nginx/html
+COPY --from=build /app/dist/browser /usr/share/nginx/html
 
 CMD ["nginx", "-g", "daemon off;"]
