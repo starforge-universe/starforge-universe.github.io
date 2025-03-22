@@ -4,9 +4,58 @@ on:
   workflow_call:
 
 jobs:
-  test:
-    name: 'Test'
+  dependency-check:
+    name: 'Dependency check'
     runs-on: ubuntu-latest
     steps:
       - name: 'Checkout project sources'
         uses: actions/checkout@v4
+
+      - name: 'Setup node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 'Clean install dependencies'
+        run: |
+          npm clean-install
+
+  lint-check:
+    name: 'Lint check'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout project sources'
+        uses: actions/checkout@v4
+
+      - name: 'Setup node'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 'Install dependencies'
+        run: npm install
+
+      - name: 'Lint check'
+        run: |
+          npm run lint
+
+  unit-test-check:
+    name: 'Unit Test Check'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout project sources'
+        uses: actions/checkout@v4
+
+      - name: 'Setup Node.js'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 'Install dependencies'
+        run: npm install
+
+      - name: 'Build'
+        run: npm run build
+
+      - name: 'Run unit tests'
+        run: npm test
