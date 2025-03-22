@@ -1,5 +1,27 @@
 version: 2
 updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "StarForgeWorker"
+    open-pull-requests-limit: 10
+    groups:
+      angular:
+        applies-to: version-updates
+        patterns:
+          - "@angular*"
+        update-types:
+          - "minor"
+          - "patch"
+      msal:
+        applies-to: version-updates
+        patterns:
+          - "@azure/msal-*"
+        update-types:
+          - "minor"
+          - "patch"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
