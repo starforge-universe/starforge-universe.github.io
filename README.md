@@ -31,13 +31,13 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 To create container image, use the following command.
 
 ```shell
-docker build -t angular-webapp-template .
+docker build -t starforge-universe-webapp .
 ```
 
 To start the container, use the following command.
 
 ```shell
-docker run -d -p 8000:80 --name angular-webapp-template angular-webapp-template
+docker run -d -p 8000:80 --name starforge-universe-webapp starforge-universe-webapp
 ```
 
 Alternatively you can use docker-compose as well.

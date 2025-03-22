@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-webapp-template": {
+    "starforge-universe-webapp": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-webapp-template:build:production"
+              "buildTarget": "starforge-universe-webapp:build:production"
             },
             "development": {
-              "buildTarget": "angular-webapp-template:build:development"
+              "buildTarget": "starforge-universe-webapp:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "angular-webapp-template:build"
+            "buildTarget": "starforge-universe-webapp:build"
           }
         },
         "test": {
