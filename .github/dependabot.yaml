@@ -4,8 +4,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    reviewers:
-      - "StarForgeWorker"
     open-pull-requests-limit: 10
     groups:
       angular:
