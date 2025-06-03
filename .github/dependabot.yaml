@@ -6,10 +6,23 @@ updates:
       interval: "daily"
     open-pull-requests-limit: 10
     groups:
-      angular:
+      angular-minor:
         applies-to: version-updates
         patterns:
           - "@angular*"
+        update-types:
+          - "minor"
+          - "patch"
+      angular-major:
+        applies-to: version-updates
+        patterns:
+          - "@angular*"
+        update-types:
+          - "major"
+      msal:
+        applies-to: version-updates
+        patterns:
+          - "@azure/msal-*"
         update-types:
           - "minor"
           - "patch"
