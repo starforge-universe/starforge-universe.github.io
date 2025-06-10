@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
@@ -13,13 +13,11 @@ import { filter, takeUntil } from 'rxjs/operators';
     standalone: true
 })
 export class AppComponent implements OnInit {
+  private msalService = inject(MsalService);
+  private msalBroadcastService = inject(MsalBroadcastService);
+
   title = 'angular-webapp-template';
   private readonly destroying$ = new Subject<void>();
-
-  constructor(
-    private msalService: MsalService,
-    private msalBroadcastService: MsalBroadcastService
-  ) { }
 
   ngOnInit() {
     this.msalBroadcastService.inProgress$
