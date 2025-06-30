@@ -21,10 +21,10 @@ describe('LandingPageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`should render elements`, () => {
+  it('should render elements', () => {
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('p').textContent)
-      .toContain(`angular-webapp-template works!`);
+    expect(compiled.querySelector('h1').textContent)
+      .toContain('Welcome to the Landing Page');
   });
 
 });
