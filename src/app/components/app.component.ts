@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, computed, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MsalBroadcastService, MsalService } from '@azure/msal-angular';
 import { InteractionStatus } from '@azure/msal-browser';
@@ -10,22 +10,24 @@ import { filter, takeUntil } from 'rxjs/operators';
     imports: [RouterOutlet],
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    standalone: true
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   private msalService = inject(MsalService);
   private msalBroadcastService = inject(MsalBroadcastService);
 
-  title = 'angular-webapp-template';
-  private readonly destroying$ = new Subject<void>();
+  // Use a signal for title
+  readonly title = signal('angular-webapp-template');
 
-  ngOnInit() {
+  // Use a signal to track interaction status
+  readonly interactionStatus = signal<InteractionStatus | null>(null);
+
+  constructor() {
     this.msalBroadcastService.inProgress$
-      .pipe(
-        filter((status: InteractionStatus) => status === InteractionStatus.None),
-        takeUntil(this.destroying$))
+      .pipe(filter((status: InteractionStatus) => status === InteractionStatus.None))
       .subscribe(() => {
         this.checkAndSetActiveAccount();
+        this.interactionStatus.set(InteractionStatus.None);
       });
   }
 
@@ -36,5 +38,4 @@ export class AppComponent implements OnInit {
       this.msalService.instance.setActiveAccount(accounts[0]);
     }
   }
-
 }
