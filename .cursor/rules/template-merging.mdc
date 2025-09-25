@@ -1,6 +1,8 @@
-# Template Merging Process
+---
+alwaysApply: false
+---
 
-Follow these steps to merge updates from the template remote into your repository:
+Execute the following steps.
 
 1. **Update your local main branch**
    ```sh
