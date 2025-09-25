@@ -40,5 +40,5 @@ Execute the following steps.
 8. **Switch back to main and clean up the feature branch locally**
    ```sh
    git checkout main
-   git branch -d feature/template-update
+   git branch -D feature/template-update
    ```
