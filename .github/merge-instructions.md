@@ -38,5 +38,5 @@ Follow these steps to merge updates from the template remote into your repositor
 8. **Switch back to main and clean up the feature branch locally**
    ```sh
    git checkout main
-   git branch -d feature/template-update
+   git branch -D feature/template-update
    ```
