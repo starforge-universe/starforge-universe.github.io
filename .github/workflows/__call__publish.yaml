@@ -14,9 +14,6 @@ jobs:
       id-token: write
       pages: write
     steps:
-      - name: 'Checkout project sources'
-        uses: actions/checkout@v6
-
       - name: 'Download artifacts'
         uses: actions/download-artifact@v6
         with:
