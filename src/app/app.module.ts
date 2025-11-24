@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app.routes';
 import { AppComponent } from './components/app.component';
 
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MsalInstanceProvider, MsalGuardConfigProvider, MsalInterceptorConfigProvider } from './msal-settings.provider';
 import { MsalService, MsalGuard, MsalBroadcastService, MsalInterceptor, MsalRedirectComponent } from '@azure/msal-angular';
 
@@ -14,6 +15,7 @@ import { MsalService, MsalGuard, MsalBroadcastService, MsalInterceptor, MsalRedi
     AppComponent,
   ],
   providers: [
+    provideHttpClient(),
     /*{
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
