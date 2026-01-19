@@ -3,8 +3,6 @@ import { MsalGuardConfiguration, MsalInterceptorConfiguration, MSAL_INSTANCE, MS
 import { environment } from '../environments/environment';
 import { IPublicClientApplication, PublicClientApplication, BrowserCacheLocation, InteractionType } from '@azure/msal-browser';
 
-const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
-
 export function MsalInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
     auth: {
@@ -13,8 +11,7 @@ export function MsalInstanceFactory(): IPublicClientApplication {
       redirectUri: '/auth'
     },
     cache: {
-      cacheLocation: BrowserCacheLocation.LocalStorage,
-      storeAuthStateInCookie: isIE, // set to true for IE 11
+      cacheLocation: BrowserCacheLocation.LocalStorage
     }
   });
 }
