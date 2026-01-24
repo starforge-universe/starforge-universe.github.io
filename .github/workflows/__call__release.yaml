@@ -17,7 +17,7 @@ jobs:
       contents: write
     steps:
       - name: 'Check out'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: 'Get latest version'
         id: latest_version
@@ -34,7 +34,7 @@ jobs:
 
       - name: 'Tag with new version'
         id: tag-commit
-        uses: issue-ops/semver@v2
+        uses: issue-ops/semver@v3
         with:
           use-version: ${{ steps.increased_version.outputs.version }}
           overwrite: true
