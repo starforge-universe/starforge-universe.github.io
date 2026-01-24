@@ -2,10 +2,6 @@
 alwaysApply: false
 ---
 
-Fundamental rules of tools used in this process:
-- Never use GitHub CLI to perform any actions.
-- Always sign git commits.
-
 Execute the following steps.
 
 Perform @local-repository-update first.
