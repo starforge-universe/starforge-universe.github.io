@@ -1,6 +1,6 @@
 # Angular Webapp Template
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 21.1.1.
 
 ## Development server
 
@@ -51,6 +51,10 @@ When you are done with local development inspection, you can stop the container.
 ```shell
 docker-compose down
 ```
+
+## DevOps Template Features
+
+This repository includes DevOps template elements implemented as GitHub Actions workflows. The template provides reusable workflows and automation tools for DevOps practices, including standardized CI/CD workflows, automated dependency management, and pull request automation.
 
 - **Auto-merge Dependabot PRs** - Automatically merges Dependabot pull requests when all checks pass
   - Intelligent mergeable status checking with retry logic
