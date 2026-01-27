@@ -45,6 +45,7 @@ The template provides modular, reusable GitHub Actions workflows that can be cal
 │   ├── CODEOWNERS                  # Code ownership configuration
 │   ├── dependabot.yaml            # Dependabot configuration
 │   └── merge-instructions.md       # Template merging guidelines
+├── CONTRIBUTING.md                 # Contribution guidelines
 └── README.md                       # This file
 ```
 
@@ -136,15 +137,7 @@ Code ownership is managed via `.github/CODEOWNERS`. All changes require approval
 
 ## Contributing
 
-This is a project skeleton repository focusing on DevOps template elements. To contribute improvements:
-
-1. Create a feature branch
-2. Make your changes
-3. Ensure all checks pass
-4. Open a pull request
-5. Wait for code owner approval
-
-**Note**: When using this repository as a base for your project, maintain the git history by **cloning** the repository rather than using GitHub's "Use this template" feature or creating a fresh repository. Cloning preserves all commit history, enabling continuous adoption of template updates through git merge operations.
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to this project.
 
 ## License
 
