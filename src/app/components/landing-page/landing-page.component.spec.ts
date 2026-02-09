@@ -23,8 +23,10 @@ describe('LandingPageComponent', () => {
 
   it('should render elements', () => {
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('h1').textContent)
-      .toContain(`Welcome to Starforge Universe!`);
+    expect(compiled.querySelector('.lead')?.textContent)
+      .toContain('Welcome to StarForge Universe');
+    expect(compiled.querySelector('.menu-panel__title')?.textContent?.trim())
+      .toBe('StarForge Universe');
   });
 
 });
