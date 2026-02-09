@@ -1,2 +1,25 @@
-<h1>Starforge Universe</h1>
-<router-outlet></router-outlet>
+<div class="parallax-background" aria-hidden="true">
+  <div
+    class="parallax-inner"
+    [style.transform]="'translate3d(0, ' + (-scrollY * parallaxFactor) + 'px, 0)'"
+  >
+    <div class="night-sky"></div>
+    <div class="stars">
+    @for (star of stars; track star.left + star.top + star.delay) {
+      <span
+        class="star"
+        [style.left.%]="star.left"
+        [style.top.%]="star.top"
+        [style.animation-delay]="star.delay + 's'"
+        [style.animation-duration]="star.duration + 's'"
+        [style.width.px]="star.size"
+        [style.height.px]="star.size"
+      ></span>
+    }
+    </div>
+  </div>
+</div>
+
+<main class="content-overlay">
+  <router-outlet></router-outlet>
+</main>

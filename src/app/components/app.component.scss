@@ -1,0 +1,74 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  position: relative;
+}
+
+.parallax-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Inner layer is taller than viewport; we translate it for parallax (moves slower than scroll) */
+.parallax-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 200vh; /* Taller than viewport so background can “scroll” with parallax */
+  will-change: transform;
+}
+
+.night-sky {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  min-height: 200vh;
+  background: linear-gradient(
+    180deg,
+    #0a0e27 0%,
+    #0d1335 25%,
+    #121a42 50%,
+    #0d1335 75%,
+    #0a0e27 100%
+  );
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  min-height: 200vh;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.8);
+  transform: translate(-50%, -50%);
+  animation: twinkle ease-in-out infinite;
+  opacity: 0.2;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.9);
+  }
+}
+
+.content-overlay {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
