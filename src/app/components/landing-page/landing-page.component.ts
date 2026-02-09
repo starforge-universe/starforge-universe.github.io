@@ -1,9 +1,9 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
-    selector: 'app-landing-page',
-    template: `<h1>Welcome to Starforge Universe!</h1>`,
-    styleUrl: './landing-page.component.scss',
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'app-landing-page',
+  templateUrl: './landing-page.component.html',
+  styleUrl: './landing-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LandingPageComponent {}
