@@ -1,0 +1,25 @@
+---
+alwaysApply: false
+---
+
+Execute the following steps.
+
+Perform @local-repository-update first.
+
+1. **Checkout the dependabot branch**
+   Ask the user which dependabot branch should be checked out, then checkout that branch.
+
+2. **Install dependencies**
+   Run `npm install` to install the updated dependencies.
+
+3. **Run checks and fix issues**
+   Run the following checks and fix any issues that arise:
+   - Build the project
+   - Lint check
+   - Unit tests
+
+4. **Commit and push changes**
+   Commit the changes (commits must be GPG signed) and push to the remote branch.
+
+5. **Switch back to main and clean up**
+   Switch back to the main branch and delete the local dependabot branch.
