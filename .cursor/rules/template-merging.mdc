@@ -13,8 +13,8 @@ Perform @local-repository-update first.
    - Merge changes from the template remote's main branch into the current branch.
    - Resolve merge conflicts according to the following aspects.
       - You must keep dependencies of origin but version numbers must be taken from the template.
-      - Ask help in every other cases to resolve merge conflicts.
-      - Use `git add` command to add the changes files.
+      - Ask for help in every other case to resolve merge conflicts.
+      - Use `git add` command to add the changed files.
    - Understand the content of `./.github/workflows/__call__checks.yaml` GitHub Workflow definition and execute all the checks locally.
 
 3. **Push the feature branch and open a pull request**
