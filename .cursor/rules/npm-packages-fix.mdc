@@ -1,4 +1,5 @@
 ---
+description: "Use when fixing or validating a Dependabot branch: run local-repository-update, checkout the dependabot branch, install dependencies, run build/lint/tests and fix issues, commit (GPG signed) and push, then switch back to main and delete the local branch."
 alwaysApply: false
 ---
 
