@@ -1,25 +1,25 @@
 # Contributing
 
-Thank you for your interest in contributing to the DevOps Template! This is a project skeleton repository focusing on DevOps template elements implemented in GitHub Workflows.
+Thank you for your interest in contributing to the **StarForge Universe** website. This is the official site for [StarForge Universe](https://starforge-universe.github.io), an Angular application that provides resources, GitHub repository templates, and an ecosystem for managing a complex and scalable project universe.
 
 ## How to Contribute
 
-To contribute improvements to this template, follow the traditional fork-based workflow:
+To contribute improvements to this project, follow the traditional fork-based workflow:
 
 1. **Fork the repository on GitHub**
-   - Navigate to the repository on GitHub
+   - Navigate to [starforge-universe/starforge-universe.github.io](https://github.com/starforge-universe/starforge-universe.github.io) on GitHub
    - Click the "Fork" button in the top-right corner
    - This creates a copy of the repository under your GitHub account
 
 2. **Clone your fork locally**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/devops-template.git
-   cd devops-template
+   git clone https://github.com/YOUR_USERNAME/starforge-universe.github.io.git
+   cd starforge-universe.github.io
    ```
 
 3. **Add the original repository as upstream**
    ```bash
-   git remote add upstream https://github.com/starforge-universe/devops-template.git
+   git remote add upstream https://github.com/starforge-universe/starforge-universe.github.io.git
    ```
 
 4. **Create a feature branch**
@@ -29,7 +29,7 @@ To contribute improvements to this template, follow the traditional fork-based w
 
 5. **Make your changes**
    - Follow the existing code style and patterns
-   - Ensure your changes align with the template's purpose
+   - Ensure your changes align with the project (Angular app, StarForge Universe branding and content)
    - Update documentation if needed
 
 6. **Commit and push to your fork**
@@ -49,7 +49,7 @@ To contribute improvements to this template, follow the traditional fork-based w
 8. **Ensure pull request checks pass**
    - The repository includes automated pull request checks (see `.github/workflows/pull-request-check.yaml`)
    - **All checks must pass without errors** before the pull request can be merged
-   - You can run checks locally using `./.github/workflows/__call__checks.yaml` before pushing
+   - You can run checks locally (see [Pull Request Checks](#pull-request-checks)) before pushing
    - If checks fail, address the issues and push additional commits to update the pull request
 
 9. **Wait for code owner approval**
@@ -74,32 +74,42 @@ This ensures your fork has the latest changes from the original repository.
 
 This project includes automated pull request checks that run on every pull request:
 
-- **Pull Request Checks Workflow** (`.github/workflows/pull-request-check.yaml`) - Validates pull requests to the main branch
-- **Reusable Checks** (`.github/workflows/__call__checks.yaml`) - Executes test and validation workflows
+- **Pull Request Checks Workflow** (`.github/workflows/pull-request-check.yaml`) – Validates pull requests to the main branch
+- **Reusable Checks** (`.github/workflows/__call__checks.yaml`) – Defines dependency, lint, build, and unit test steps
+
+**Run checks locally** (Node.js required):
+
+```bash
+npm install
+npm run lint
+npm run build
+npm test
+```
 
 **Important**: All pull request checks must complete successfully without errors before a pull request can be merged. Make sure to:
-- Run checks locally before pushing
+
+- Run the above commands before pushing
 - Address any failing checks
 - Ensure all automated tests pass
 
-## Git History Preservation
+## Template Merging
 
-**Important**: When using this repository as a base for your project, maintain the git history by **cloning** the repository rather than using GitHub's "Use this template" feature or creating a fresh repository.
+This repository is based on an Angular webapp template and can merge updates from that template. When updating from the template:
 
-Cloning preserves all commit history, enabling continuous adoption of template updates through git merge operations. This allows you to:
-- Merge template improvements into your project
-- Maintain a connection to the original template repository
-- Track the evolution of your project alongside template updates
+- Keep this project’s dependency set; adopt version numbers from the template where applicable
+- Preserve StarForge Universe–specific content and customizations
+- See the [template-merging rule](.cursor/rules/template-merging.mdc) and [merge-instructions.md](.github/merge-instructions.md) for the full process
 
 ## Code of Conduct
 
 - Be respectful and considerate in all interactions
 - Provide constructive feedback
-- Follow the project's coding standards and guidelines
+- Follow the project’s coding standards and guidelines
 
 ## Questions?
 
 If you have questions or need help, please:
+
 - Open an issue for discussion
 - Contact the code owners
 - Review the [README.md](README.md) for more information about the project
