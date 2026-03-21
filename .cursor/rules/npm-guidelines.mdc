@@ -1,0 +1,9 @@
+---
+alwaysApply: true
+---
+
+Project must follow these npm guidelines:
+
+- **Do not use legacy peer dependency resolution** for any install-related command. Never pass `--legacy-peer-deps` (or equivalent) to `npm install`, `npm ci`, `npm update`, or other npm commands that resolve or install packages. Do not rely on `.npmrc` settings that enable legacy peer deps for installs you perform. If peer dependency conflicts appear, resolve them by aligning package versions or adjusting dependencies—not by bypassing peer dependency checks.
+
+- **`package-lock.json` merge conflicts:** Do not hand-edit conflict markers inside the lockfile. Remove `node_modules` and delete `package-lock.json`, ensure `package.json` reflects the intended merged dependency set, then run **`npm install`** to regenerate a clean lockfile. Commit the new `package-lock.json` (and any `package.json` changes) after verifying the project still builds and tests pass.
