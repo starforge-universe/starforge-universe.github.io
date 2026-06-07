@@ -1,30 +1,55 @@
 # Angular Webapp Template
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 21.1.1.
+This project uses [Angular CLI](https://github.com/angular/angular-cli) version 22.
+
+## Prerequisites
+
+- Node.js 24
+- npm
+
+Install dependencies with:
+
+```shell
+npm install
+```
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Run `npm run ng -- generate component component-name` to generate a new component. You can also use `npm run ng -- generate directive|pipe|service|class|guard|interface|enum`.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm run build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github.io). Tests run with ChromeHeadless, watch mode disabled, and code coverage enabled.
 
-## Running end-to-end tests
+## Linting
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run `npm run lint` to execute the Angular lint check.
+
+## Pull request checks
+
+Pull request checks use Node.js 24 and run the commands defined in `.github/workflows/__call__checks.yaml`:
+
+```shell
+npm clean-install
+npm install
+npm run lint
+npm run build
+npm test
+```
+
+Run these checks locally before opening or updating a pull request.
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To get more help on the Angular CLI, run `npm run ng -- help` or see the [Angular CLI documentation](https://angular.dev/tools/cli).
 
 ## Run this project locally
 
@@ -90,7 +115,12 @@ This repository is designed to maintain git history, allowing template updates t
    - Keep your project-specific dependencies but adopt version numbers from the template
    - Preserve your project-specific customizations
    - Ask for help when unsure about conflict resolution
-6. Run checks locally using `./.github/workflows/__call__checks.yaml`
+6. Run the pull request checks locally with Node.js 24:
+   - `npm clean-install`
+   - `npm install`
+   - `npm run lint`
+   - `npm run build`
+   - `npm test`
 7. Push the feature branch and open a pull request
 8. After merge, switch back to main and clean up the feature branch
 
@@ -101,7 +131,7 @@ See [merge-instructions.md](.github/merge-instructions.md) for detailed steps.
 ## Dependabot
 
 Dependabot is configured to:
-- Check for GitHub Actions updates daily
+- Check for npm and GitHub Actions updates daily
 - Automatically create pull requests for updates
 - Auto-merge PRs when checks pass (via auto-merge workflow)
 

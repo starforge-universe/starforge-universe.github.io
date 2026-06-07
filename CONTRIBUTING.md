@@ -31,28 +31,45 @@ To contribute improvements to this template, follow the traditional fork-based w
    - Follow the existing code style and patterns
    - Ensure your changes align with the project's purpose
    - Update documentation if needed
+   - Use Node.js 24 when installing dependencies or running checks
+   - Do not use `--legacy-peer-deps`; resolve peer dependency conflicts by aligning package versions
 
-6. **Commit and push to your fork**
+6. **Install dependencies and run local checks**
+   ```bash
+   npm install
+   npm run lint
+   npm run build
+   npm test
+   ```
+
+7. **Commit and push to your fork**
    ```bash
    git add .
    git commit -m "Description of your changes"
    git push origin feature/your-feature-name
    ```
 
-7. **Open a pull request on GitHub**
+8. **Open a pull request on GitHub**
    - Navigate to your fork on GitHub
    - Click "New Pull Request"
    - Select your feature branch to merge into the original repository's main branch
    - Provide a clear description of your changes
    - Reference any related issues
 
-8. **Ensure pull request checks pass**
+9. **Ensure pull request checks pass**
    - The repository includes automated pull request checks (see `.github/workflows/pull-request-check.yaml`)
    - **All checks must pass without errors** before the pull request can be merged
-   - You can run checks locally using `./.github/workflows/__call__checks.yaml` before pushing
+   - You can mirror the reusable checks in `.github/workflows/__call__checks.yaml` locally before pushing:
+     ```bash
+     npm clean-install
+     npm install
+     npm run lint
+     npm run build
+     npm test
+     ```
    - If checks fail, address the issues and push additional commits to update the pull request
 
-9. **Wait for code owner approval**
+10. **Wait for code owner approval**
    - All changes require approval from code owners (defined in `.github/CODEOWNERS`)
    - Address any feedback or requested changes
    - Once approved and all checks pass, your pull request will be merged
@@ -78,7 +95,7 @@ This project includes automated pull request checks that run on every pull reque
 - **Reusable Checks** (`.github/workflows/__call__checks.yaml`) - Executes test and validation workflows
 
 **Important**: All pull request checks must complete successfully without errors before a pull request can be merged. Make sure to:
-- Run checks locally before pushing
+- Run checks locally with Node.js 24 before pushing
 - Address any failing checks
 - Ensure all automated tests pass
 
