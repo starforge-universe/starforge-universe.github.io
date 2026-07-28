@@ -1,0 +1,31 @@
+@if (product(); as line) {
+  <article class="detail">
+    <div class="detail__hero">
+      <a class="detail__back" routerLink="/">← Back to universe</a>
+      <p class="detail__status" [attr.data-status]="line.status">{{ line.statusLabel }}</p>
+      <h1 class="detail__title">{{ line.name }}</h1>
+      <p class="detail__tagline">{{ line.tagline }}</p>
+      <p class="detail__summary">{{ line.summary }}</p>
+    </div>
+
+    <div class="detail__stage">
+      @for (block of line.story; track block.title) {
+        <section class="detail__block">
+          <h2>{{ block.title }}</h2>
+          <p>{{ block.body }}</p>
+        </section>
+      }
+
+      <div class="detail__footer">
+        <a class="detail__cta" routerLink="/" fragment="product-lines">All product lines</a>
+      </div>
+    </div>
+  </article>
+} @else {
+  <section class="missing">
+    <a class="detail__back" routerLink="/">← Back to universe</a>
+    <h1>Product line not found</h1>
+    <p>That line is not in the catalog yet. Return home to explore what is available.</p>
+    <a class="detail__cta" routerLink="/">Go home</a>
+  </section>
+}

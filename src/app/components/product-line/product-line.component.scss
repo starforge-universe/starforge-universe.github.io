@@ -1,0 +1,115 @@
+:host {
+  display: block;
+}
+
+.detail__hero {
+  padding: clamp(2.5rem, 8vh, 5rem) clamp(1.25rem, 4vw, 3rem) clamp(3rem, 7vh, 4.5rem);
+  color: #eef3f8;
+  max-width: 48rem;
+}
+
+.detail__back,
+.missing .detail__back {
+  display: inline-flex;
+  margin-bottom: 1.75rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: rgba(238, 243, 248, 0.72);
+  text-decoration: none;
+  transition: color 200ms var(--sf-ease);
+}
+
+.detail__back:hover {
+  color: #ffffff;
+}
+
+.detail__status {
+  margin: 0 0 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sf-accent-strong);
+}
+
+.detail__status[data-status='building'] {
+  color: #c5ced8;
+}
+
+.detail__title {
+  margin: 0;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  max-width: 14ch;
+}
+
+.detail__tagline {
+  margin: 1rem 0 0;
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  color: rgba(238, 243, 248, 0.82);
+}
+
+.detail__summary {
+  margin: 1.25rem 0 0;
+  max-width: 38rem;
+  color: rgba(238, 243, 248, 0.68);
+  line-height: 1.7;
+}
+
+.detail__stage {
+  background: var(--sf-stage-gradient);
+  color: var(--sf-stage-text);
+  padding: clamp(3rem, 8vh, 5.5rem) clamp(1.25rem, 4vw, 3rem);
+}
+
+.detail__block {
+  max-width: 40rem;
+  margin: 0 auto 2.5rem;
+}
+
+.detail__block h2 {
+  margin: 0;
+  font-size: clamp(1.45rem, 2.8vw, 1.9rem);
+}
+
+.detail__block p {
+  margin: 0.85rem 0 0;
+  color: var(--sf-stage-muted);
+  line-height: 1.7;
+}
+
+.detail__footer {
+  max-width: 40rem;
+  margin: 3rem auto 0;
+}
+
+.detail__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.65rem 1.2rem;
+  border-radius: 999px;
+  background: var(--sf-bg-stage-ink);
+  color: #f4f7fb;
+  text-decoration: none;
+  font-weight: 650;
+}
+
+[data-theme='dark'] .detail__cta {
+  background: #12141a;
+}
+
+.missing {
+  padding: clamp(3rem, 10vh, 6rem) clamp(1.25rem, 4vw, 3rem);
+  color: #eef3f8;
+  max-width: 36rem;
+}
+
+.missing h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+.missing p {
+  margin: 0 0 1.5rem;
+  color: rgba(238, 243, 248, 0.7);
+}

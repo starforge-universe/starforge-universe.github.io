@@ -2,73 +2,79 @@
   display: block;
   min-height: 100vh;
   position: relative;
+  color: var(--sf-text);
 }
 
-.parallax-background {
+.ambient {
   position: fixed;
   inset: 0;
   z-index: 0;
   overflow: hidden;
-}
-
-/* Inner layer is taller than viewport; we translate it for parallax (moves slower than scroll) */
-.parallax-inner {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  min-height: 200vh; /* Taller than viewport so background can “scroll” with parallax */
-  will-change: transform;
-}
-
-.night-sky {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  min-height: 200vh;
-  background: linear-gradient(
-    180deg,
-    #0a0e27 0%,
-    #0d1335 25%,
-    #121a42 50%,
-    #0d1335 75%,
-    #0a0e27 100%
-  );
-}
-
-.stars {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  min-height: 200vh;
   pointer-events: none;
 }
 
-.star {
+.ambient__parallax {
   position: absolute;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.8);
-  transform: translate(-50%, -50%);
-  animation: twinkle ease-in-out infinite;
-  opacity: 0.2;
+  inset: 0 0 auto;
+  width: 100%;
+  min-height: 180vh;
+  will-change: transform;
 }
 
-@keyframes twinkle {
+.ambient__sky {
+  position: absolute;
+  inset: 0;
+  background: var(--sf-hero-gradient);
+}
+
+.ambient__veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(126, 182, 201, 0.14), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 80% 30%, rgba(168, 212, 224, 0.08), transparent 50%);
+}
+
+[data-theme='light'] .ambient__veil {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(47, 111, 130, 0.18), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 80% 30%, rgba(168, 212, 224, 0.12), transparent 50%);
+}
+
+.ambient__stars {
+  position: absolute;
+  inset: 0;
+}
+
+.ambient__star {
+  position: absolute;
+  border-radius: 50%;
+  background: #f4f7fb;
+  transform: translate(-50%, -50%);
+  opacity: var(--star-opacity, 0.35);
+  animation: star-drift ease-in-out infinite;
+}
+
+@keyframes star-drift {
   0%,
   100% {
-    opacity: 0.2;
+    opacity: var(--star-opacity, 0.35);
     transform: translate(-50%, -50%) scale(1);
   }
   50% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.2);
-    box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.9);
+    opacity: calc(var(--star-opacity, 0.35) * 1.35);
+    transform: translate(-50%, -50%) scale(1.15);
   }
 }
 
-.content-overlay {
+.shell-main {
   position: relative;
   z-index: 1;
-  min-height: 100vh;
+  min-height: calc(100vh - 4rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient__star {
+    animation: none;
+  }
 }

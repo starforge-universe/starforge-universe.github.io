@@ -1,0 +1,118 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.site-nav {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.6fr) auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem clamp(1rem, 3vw, 2rem);
+  background: var(--sf-nav-bg);
+  border-bottom: 1px solid var(--sf-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.site-nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+  min-width: 0;
+}
+
+.site-nav__mark {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f5f7fa 0%, var(--sf-accent) 55%, transparent 75%);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.site-nav__name {
+  font-family: var(--sf-font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.site-nav__links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+}
+
+.site-nav__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.site-nav__link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--sf-text-muted);
+  text-decoration: none;
+  transition: color 200ms var(--sf-ease);
+}
+
+.site-nav__link:hover,
+.site-nav__link.is-active {
+  color: var(--sf-text);
+}
+
+.site-nav__theme {
+  appearance: none;
+  border: 1px solid var(--sf-border-strong);
+  background: transparent;
+  color: var(--sf-text);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  cursor: pointer;
+  transition:
+    border-color 200ms var(--sf-ease),
+    background-color 200ms var(--sf-ease);
+}
+
+.site-nav__theme:hover {
+  border-color: var(--sf-accent);
+  background: color-mix(in srgb, var(--sf-accent) 12%, transparent);
+}
+
+.site-nav__theme-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 860px) {
+  .site-nav {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'brand actions'
+      'links links';
+  }
+
+  .site-nav__brand {
+    grid-area: brand;
+  }
+
+  .site-nav__links {
+    grid-area: links;
+    justify-content: flex-start;
+  }
+
+  .site-nav__actions {
+    grid-area: actions;
+  }
+}

@@ -1,25 +1,29 @@
-<div class="parallax-background" aria-hidden="true">
+<div class="ambient" aria-hidden="true">
   <div
-    class="parallax-inner"
+    class="ambient__parallax"
     [style.transform]="'translate3d(0, ' + (-scrollY * parallaxFactor) + 'px, 0)'"
   >
-    <div class="night-sky"></div>
-    <div class="stars">
-    @for (star of stars; track star.left + star.top + star.delay) {
-      <span
-        class="star"
-        [style.left.%]="star.left"
-        [style.top.%]="star.top"
-        [style.animation-delay]="star.delay + 's'"
-        [style.animation-duration]="star.duration + 's'"
-        [style.width.px]="star.size"
-        [style.height.px]="star.size"
-      ></span>
-    }
+    <div class="ambient__sky"></div>
+    <div class="ambient__veil"></div>
+    <div class="ambient__stars">
+      @for (star of stars; track $index) {
+        <span
+          class="ambient__star"
+          [style.left.%]="star.left"
+          [style.top.%]="star.top"
+          [style.width.px]="star.size"
+          [style.height.px]="star.size"
+          [style.animation-delay]="star.delay + 's'"
+          [style.animation-duration]="star.duration + 's'"
+          [style.--star-opacity]="star.opacity"
+        ></span>
+      }
     </div>
   </div>
 </div>
 
-<main class="content-overlay">
-  <router-outlet></router-outlet>
+<app-site-nav />
+
+<main class="shell-main">
+  <router-outlet />
 </main>

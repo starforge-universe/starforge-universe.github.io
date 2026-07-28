@@ -6,6 +6,7 @@ import {
   inject
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { SiteNavComponent } from './site-nav/site-nav.component';
 
 export interface Star {
   left: number;
@@ -13,23 +14,22 @@ export interface Star {
   delay: number;
   duration: number;
   size: number;
+  opacity: number;
 }
 
-/** Parallax factor: background moves this fraction of scroll distance (0.3 = 30% speed = depth). */
-const PARALLAX_FACTOR = 0.35;
+const PARALLAX_FACTOR = 0.28;
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, SiteNavComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-  private cdr = inject(ChangeDetectorRef);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   readonly stars: Star[] = this.generateStars();
-  /** Scroll offset for parallax: background translates by -scrollY * factor */
   scrollY = 0;
   readonly parallaxFactor = PARALLAX_FACTOR;
 
@@ -43,15 +43,16 @@ export class AppComponent {
   }
 
   private generateStars(): Star[] {
-    const count = 100;
+    const count = 64;
     const stars: Star[] = [];
     for (let i = 0; i < count; i++) {
       stars.push({
         left: Math.random() * 100,
         top: Math.random() * 100,
-        delay: Math.random() * 5,
-        duration: 1.5 + Math.random() * 2.5,
-        size: 1 + Math.random() * 2
+        delay: Math.random() * 6,
+        duration: 2.5 + Math.random() * 4,
+        size: 1 + Math.random() * 1.6,
+        opacity: 0.15 + Math.random() * 0.45
       });
     }
     return stars;
