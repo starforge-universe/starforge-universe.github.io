@@ -1,2 +1,41 @@
-h1 { color: red; }
-p { font-size: 20px; }
+:host {
+  display: block;
+}
+
+.not-found {
+  padding: clamp(4rem, 12vh, 7rem) clamp(1.25rem, 4vw, 3rem);
+  max-width: 36rem;
+  color: #eef3f8;
+}
+
+.not-found__eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 650;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(168, 212, 224, 0.9);
+}
+
+.not-found h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+}
+
+.not-found p {
+  margin: 1rem 0 0;
+  color: rgba(238, 243, 248, 0.7);
+}
+
+.not-found__cta {
+  display: inline-flex;
+  margin-top: 1.75rem;
+  min-height: 2.75rem;
+  align-items: center;
+  padding: 0.65rem 1.2rem;
+  border-radius: 999px;
+  background: #eef3f8;
+  color: #0b1220;
+  font-weight: 650;
+  text-decoration: none;
+}

@@ -1,0 +1,68 @@
+<section class="hero" aria-labelledby="hero-brand">
+  <div class="hero__content">
+    <p class="hero__brand" id="hero-brand">Starforge Universe</p>
+    <h1 class="hero__headline">Forge a universe of projects that stay coherent as they grow.</h1>
+    <p class="hero__lead">
+      Templates, standards, and an ecosystem for developers who manage more than one repository.
+    </p>
+    <div class="hero__cta">
+      <a class="btn btn--primary" routerLink="/" fragment="product-lines">Explore product lines</a>
+      <a class="btn btn--ghost" routerLink="/" fragment="introduction">Read the story</a>
+    </div>
+  </div>
+  <div class="hero__visual" aria-hidden="true">
+    <div class="hero__orbit hero__orbit--outer"></div>
+    <div class="hero__orbit hero__orbit--inner"></div>
+    <div class="hero__core"></div>
+  </div>
+</section>
+
+<section class="stage stage--intro" id="introduction" aria-labelledby="intro-title">
+  <div class="stage__inner" data-reveal>
+    <p class="eyebrow">Introduction</p>
+    <h2 id="intro-title">One brand for a complex, scalable project universe.</h2>
+    <p class="stage__copy">
+      Starforge Universe supports developers with useful resources to build and grow—
+      from GitHub repository templates with sensible defaults to shared structure that keeps many
+      projects consistent. It is an ecosystem for managing a universe of repositories with clear
+      conventions and room to expand.
+    </p>
+  </div>
+</section>
+
+<section class="lines" id="product-lines" aria-labelledby="lines-title">
+  <div class="lines__header" data-reveal>
+    <p class="eyebrow">Product lines</p>
+    <h2 id="lines-title">Tools that shape the universe.</h2>
+    <p class="lines__lead">
+      Each line deepens a different part of the story. Select one to continue without leaving the
+      experience.
+    </p>
+  </div>
+
+  <ul class="lines__list">
+    @for (line of productLines; track line.slug) {
+      <li class="lines__item" data-reveal>
+        <a class="lines__link" [routerLink]="['/lines', line.slug]">
+          <div class="lines__meta">
+            <span class="lines__status" [attr.data-status]="line.status">{{ line.statusLabel }}</span>
+            <h3 class="lines__name">{{ line.name }}</h3>
+            <p class="lines__tagline">{{ line.tagline }}</p>
+          </div>
+          <span class="lines__action" aria-hidden="true">View</span>
+        </a>
+      </li>
+    }
+  </ul>
+</section>
+
+<section class="stage stage--close" aria-labelledby="close-title">
+  <div class="stage__inner" data-reveal>
+    <p class="eyebrow">Keep watching</p>
+    <h2 id="close-title">The universe is still expanding.</h2>
+    <p class="stage__copy">
+      New product lines will appear here as they take shape. Follow the craft, return often, and
+      grow your own constellation of projects with Starforge.
+    </p>
+  </div>
+</section>

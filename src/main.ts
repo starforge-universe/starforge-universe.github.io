@@ -1,6 +1,6 @@
 import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 
 import { AppComponent } from './app/components/app.component';
 import { routes } from './app/app.routes';
@@ -11,6 +11,14 @@ if (environment.production) {
 }
 
 bootstrapApplication(AppComponent, {
-  providers: [provideRouter(routes)]
-})
-  .catch(err => console.error(err));
+  providers: [
+    provideRouter(
+      routes,
+      withViewTransitions(),
+      withInMemoryScrolling({
+        anchorScrolling: 'enabled',
+        scrollPositionRestoration: 'enabled'
+      })
+    )
+  ]
+}).catch((err) => console.error(err));

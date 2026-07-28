@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { PageNotFoundComponent } from './page-not-found.component';
 
@@ -8,9 +9,9 @@ describe('PageNotFoundComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PageNotFoundComponent]
-    })
-    .compileComponents();
+      imports: [PageNotFoundComponent],
+      providers: [provideRouter([])]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PageNotFoundComponent);
     component = fixture.componentInstance;
@@ -21,12 +22,9 @@ describe('PageNotFoundComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`should render elements`, () => {
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('h1').textContent)
-      .toContain(`404 - Page Not Found`);
-    expect(compiled.querySelector('p').textContent)
-      .toContain(`The page you are looking for does not exist.`);
+  it('should render elements', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.querySelector('h1')?.textContent).toContain('This path is off the map');
+    expect(compiled.querySelector('.not-found__cta')?.textContent).toContain('Return home');
   });
-
 });

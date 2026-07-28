@@ -1,0 +1,36 @@
+<header class="site-nav" role="banner">
+  <a class="site-nav__brand" routerLink="/" aria-label="Starforge Universe home">
+    <span class="site-nav__mark" aria-hidden="true"></span>
+    <span class="site-nav__name">Starforge Universe</span>
+  </a>
+
+  <nav class="site-nav__links" aria-label="Product lines">
+    @for (line of productLines; track line.slug) {
+      <a
+        class="site-nav__link"
+        [routerLink]="['/lines', line.slug]"
+        routerLinkActive="is-active"
+      >
+        {{ line.shortName }}
+      </a>
+    }
+  </nav>
+
+  <div class="site-nav__actions">
+    <a class="site-nav__link site-nav__link--quiet" routerLink="/" fragment="product-lines">
+      Explore
+    </a>
+    <button
+      type="button"
+      class="site-nav__theme"
+      (click)="themeService.toggle()"
+      [attr.aria-label]="
+        themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+      "
+    >
+      <span class="site-nav__theme-label">
+        {{ themeService.theme() === 'dark' ? 'Light' : 'Dark' }}
+      </span>
+    </button>
+  </div>
+</header>

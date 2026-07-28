@@ -1,0 +1,46 @@
+---
+description: Starforge Universe brand, storytelling UX, and product-catalog conventions
+alwaysApply: true
+---
+
+# Starforge Universe site concept
+
+Preserve this product and design concept in all UI, copy, and frontend changes.
+
+## Brand and storytelling
+
+- Brand name: **Starforge Universe** (hero-level, not only nav text).
+- Tone: Apple-style scroll storytelling — sparse sections, one job per section, large expressive type.
+- Hybrid visual system: cinematic **deep-space hero** + quieter **light paper stage** content sections.
+- Support **dark and light** themes (`data-theme` on `html`, `ThemeService`, persisted). Both modes must remain viable.
+- Fonts: Syne (display) + Manrope (body). Do not switch to Inter/Roboto/Arial/system stacks.
+- Accents: cool starlight / teal-metal — not purple glow defaults. On light stages, use dark stage eyebrow tokens (`--sf-stage-eyebrow`) for contrast.
+- Motion: ambient stars/parallax, scroll reveals, route view transitions. Prefer `opacity`/`transform`; honor `prefers-reduced-motion`.
+
+## Navigation (no page-load feel)
+
+- Keep app shell (ambient background + sticky nav) mounted across routes.
+- Home: `''`. Product detail: `/lines/:slug`. Unknown slug: in-page missing state; unknown path: 404.
+- Use `routerLink` / `Router` + `withViewTransitions()` — never full document reloads for product selection.
+- Detail views always offer a clear **Back to universe** path.
+
+## Product lines (extendable)
+
+- Single source of truth: [`src/app/data/product-lines.ts`](src/app/data/product-lines.ts).
+- To add a product line, **only add a catalog entry** (slug, name, tagline, summary, status, story blocks). Home list and nav must stay data-driven — do not hard-code product rows in templates.
+- Current lines:
+  - `project-templating` — Starforge project templating (available): GitHub templates, CI/CD, layout, conventions.
+  - `all-seeing-eye` — All Seeing Eye (building): discoverability and monitoring of codebase state across a project universe; dependencies/integrations for compliance; architectural overview of GitHub repos. Frame as in progress / growing — do not oversell.
+
+## Home section order
+
+1. Hero — brand, one headline, one lead, one CTA group; no product grid in the first viewport.
+2. Introduction — what Starforge Universe is.
+3. Product lines — catalog-driven list linking to details.
+4. Closing — quiet invitation; universe still expanding.
+
+## Do not
+
+- Replace the hybrid cosmic/stage system with a generic dashboard or purple-gradient AI look.
+- Put cards, badges, or promo chips on top of hero media.
+- Duplicate product copy outside the catalog when the catalog already owns it.
