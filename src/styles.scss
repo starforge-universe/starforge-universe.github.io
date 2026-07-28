@@ -11,7 +11,6 @@
 
   --sf-text: #e8ecf4;
   --sf-text-muted: rgba(232, 236, 244, 0.68);
-  --sf-text-faint: rgba(232, 236, 244, 0.42);
 
   --sf-stage-text: #12141a;
   --sf-stage-muted: rgba(18, 20, 26, 0.68);
@@ -34,7 +33,6 @@
   --sf-stage-gradient: linear-gradient(180deg, #f7f5f0 0%, #ebe7df 100%);
 
   --sf-nav-bg: rgba(7, 9, 15, 0.72);
-  --sf-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
 
   --sf-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --sf-duration: 480ms;
@@ -50,7 +48,6 @@
 
   --sf-text: #12141a;
   --sf-text-muted: rgba(18, 20, 26, 0.7);
-  --sf-text-faint: rgba(18, 20, 26, 0.45);
 
   --sf-stage-text: #12141a;
   --sf-stage-muted: rgba(18, 20, 26, 0.68);
@@ -72,7 +69,6 @@
   --sf-stage-gradient: linear-gradient(180deg, #ffffff 0%, #f3f0ea 100%);
 
   --sf-nav-bg: rgba(243, 240, 234, 0.82);
-  --sf-shadow: 0 20px 48px rgba(18, 20, 26, 0.08);
 
   color-scheme: light;
 }
@@ -107,8 +103,7 @@ body {
 
 h1,
 h2,
-h3,
-.display {
+h3 {
   font-family: var(--sf-font-display);
   font-weight: 700;
   letter-spacing: -0.03em;

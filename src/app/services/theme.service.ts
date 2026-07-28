@@ -24,10 +24,6 @@ export class ThemeService {
     this.theme.update((current) => (current === 'dark' ? 'light' : 'dark'));
   }
 
-  setTheme(theme: ThemeMode): void {
-    this.theme.set(theme);
-  }
-
   private resolveInitial(): ThemeMode {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);

@@ -71,10 +71,6 @@
   color: var(--sf-text);
 }
 
-.site-nav__link--quiet {
-  display: none;
-}
-
 .site-nav__theme {
   appearance: none;
   border: 1px solid var(--sf-border-strong);
@@ -118,9 +114,5 @@
 
   .site-nav__actions {
     grid-area: actions;
-  }
-
-  .site-nav__link--quiet {
-    display: none;
   }
 }

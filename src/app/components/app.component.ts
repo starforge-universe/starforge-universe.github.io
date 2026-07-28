@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SiteNavComponent } from './site-nav/site-nav.component';
-import { ThemeService } from '../services/theme.service';
 
 export interface Star {
   left: number;
@@ -29,8 +28,6 @@ const PARALLAX_FACTOR = 0.28;
 })
 export class AppComponent {
   private readonly cdr = inject(ChangeDetectorRef);
-  /** Eagerly construct theme so document attribute stays in sync. */
-  protected readonly themeService = inject(ThemeService);
 
   readonly stars: Star[] = this.generateStars();
   scrollY = 0;
