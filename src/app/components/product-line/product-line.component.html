@@ -16,6 +16,42 @@
         </section>
       }
 
+      @if (line.products?.length) {
+        <section class="detail__products" aria-labelledby="products-title">
+          <p class="detail__products-eyebrow">In this line</p>
+          <h2 id="products-title">Tools</h2>
+          <ul class="detail__products-list">
+            @for (item of line.products; track item.slug) {
+              <li class="detail__product">
+                <div class="detail__product-header">
+                  <span
+                    class="detail__product-status"
+                    [attr.data-status]="item.status"
+                  >{{ item.statusLabel }}</span>
+                  <h3>{{ item.name }}</h3>
+                  <p class="detail__product-tagline">{{ item.tagline }}</p>
+                  <p class="detail__product-summary">{{ item.summary }}</p>
+                  @if (item.repositoryUrl) {
+                    <a
+                      class="detail__product-link"
+                      [href]="item.repositoryUrl"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >View on GitHub</a>
+                  }
+                </div>
+                @for (block of item.story; track block.title) {
+                  <div class="detail__product-block">
+                    <h4>{{ block.title }}</h4>
+                    <p>{{ block.body }}</p>
+                  </div>
+                }
+              </li>
+            }
+          </ul>
+        </section>
+      }
+
       <div class="detail__footer">
         <a class="detail__cta" routerLink="/" fragment="product-lines">All product lines</a>
       </div>

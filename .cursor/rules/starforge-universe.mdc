@@ -28,9 +28,11 @@ Preserve this product and design concept in all UI, copy, and frontend changes.
 
 - Single source of truth: [`src/app/data/product-lines.ts`](src/app/data/product-lines.ts).
 - To add a product line, **only add a catalog entry** (slug, name, tagline, summary, status, story blocks). Home list and nav must stay data-driven — do not hard-code product rows in templates.
+- Category lines (for example Utilities) may include nested `products`. Add tools there to extend the category without new hard-coded UI.
 - Current lines:
   - `project-templating` — Starforge project templating (available): GitHub templates, CI/CD, layout, conventions.
   - `all-seeing-eye` — All Seeing Eye (building): discoverability and monitoring of codebase state across a project universe; dependencies/integrations for compliance; architectural overview of GitHub repos. Frame as in progress / growing — do not oversell.
+  - `utilities` — Utilities (available): category of developer productivity tools. Nested `products` grow this line; first tool is LiquiSketch (Liquibase changelogs → Draw.io schema diagrams). Add more utilities via `products`, not hard-coded templates.
 
 ## Home section order
 
