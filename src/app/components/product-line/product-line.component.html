@@ -19,7 +19,7 @@
       @if (line.products?.length) {
         <section class="detail__products" aria-labelledby="products-title">
           <p class="detail__products-eyebrow">In this line</p>
-          <h2 id="products-title">Tools</h2>
+          <h2 id="products-title">{{ line.productsHeading ?? 'Tools' }}</h2>
           <ul class="detail__products-list">
             @for (item of line.products; track item.slug) {
               <li class="detail__product" [attr.id]="item.slug">
@@ -45,6 +45,85 @@
                     <h4>{{ block.title }}</h4>
                     <p>{{ block.body }}</p>
                   </div>
+                }
+
+                @if (item.children?.length) {
+                  <ul class="detail__children">
+                    @for (child of item.children; track child.slug) {
+                      <li class="detail__child" [attr.id]="child.slug">
+                        <span
+                          class="detail__product-status"
+                          [attr.data-status]="child.status"
+                        >{{ child.statusLabel }}</span>
+                        <h4>{{ child.name }}</h4>
+                        <p class="detail__product-tagline">{{ child.tagline }}</p>
+                        <p class="detail__product-summary">{{ child.summary }}</p>
+                        @if (child.repositoryUrl) {
+                          <a
+                            class="detail__product-link"
+                            [href]="child.repositoryUrl"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >View on GitHub</a>
+                        }
+                        @for (block of child.story; track block.title) {
+                          <div class="detail__product-block">
+                            <h5>{{ block.title }}</h5>
+                            <p>{{ block.body }}</p>
+                          </div>
+                        }
+
+                        @if (composedParts(line, child); as parts) {
+                          @if (parts.length) {
+                            <div class="detail__composed">
+                              <p class="detail__composed-label">Composed from</p>
+                              <ul class="detail__composed-list">
+                                @for (part of parts; track part.slug) {
+                                  <li>
+                                    <a
+                                      class="detail__composed-link"
+                                      [routerLink]="['/lines', line.slug]"
+                                      [fragment]="part.slug"
+                                    >{{ part.name }}</a>
+                                  </li>
+                                }
+                              </ul>
+                            </div>
+                          }
+                        }
+
+                        @if (child.children?.length) {
+                          <ul class="detail__grandchildren">
+                            @for (nested of child.children; track nested.slug) {
+                              <li class="detail__grandchild" [attr.id]="nested.slug">
+                                <span
+                                  class="detail__product-status"
+                                  [attr.data-status]="nested.status"
+                                >{{ nested.statusLabel }}</span>
+                                <h5>{{ nested.name }}</h5>
+                                <p class="detail__product-tagline">{{ nested.tagline }}</p>
+                                <p class="detail__product-summary">{{ nested.summary }}</p>
+                                @if (nested.repositoryUrl) {
+                                  <a
+                                    class="detail__product-link"
+                                    [href]="nested.repositoryUrl"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >View on GitHub</a>
+                                }
+                                @for (block of nested.story; track block.title) {
+                                  <div class="detail__product-block">
+                                    <h6>{{ block.title }}</h6>
+                                    <p>{{ block.body }}</p>
+                                  </div>
+                                }
+                              </li>
+                            }
+                          </ul>
+                        }
+                      </li>
+                    }
+                  </ul>
                 }
               </li>
             }

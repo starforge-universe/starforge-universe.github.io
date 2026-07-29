@@ -2,7 +2,12 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { getProductLine } from '../../data/product-lines';
+import {
+  CatalogProduct,
+  ProductLine,
+  getProductLine,
+  resolveComposedProducts
+} from '../../data/product-lines';
 
 @Component({
   selector: 'app-product-line',
@@ -20,4 +25,8 @@ export class ProductLineComponent {
   );
 
   readonly product = computed(() => getProductLine(this.slug()));
+
+  composedParts(line: ProductLine, item: CatalogProduct): readonly CatalogProduct[] {
+    return resolveComposedProducts(line, item);
+  }
 }

@@ -131,6 +131,7 @@
   padding: clamp(4rem, 10vh, 7rem) clamp(1.25rem, 4vw, 3rem);
   background: var(--sf-stage-gradient);
   color: var(--sf-stage-text);
+  scroll-margin-top: 6.5rem;
 }
 
 .stage--close {
@@ -172,6 +173,7 @@
 .lines {
   padding: clamp(4rem, 10vh, 7rem) clamp(1.25rem, 4vw, 3rem);
   background: color-mix(in srgb, var(--sf-bg) 92%, transparent);
+  scroll-margin-top: 6.5rem;
 }
 
 .lines__header {

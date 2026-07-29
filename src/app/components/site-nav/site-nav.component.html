@@ -52,27 +52,88 @@
     <div class="site-nav__mega-clip">
       @if (activeLine(); as line) {
         <div class="site-nav__mega-panel" (mouseenter)="cancelClose()">
-          <div class="site-nav__mega-inner">
-            <p class="site-nav__mega-label">{{ line.shortName }}</p>
-            <ul class="site-nav__mega-list">
-              @for (item of menuItemsFor(line); track item.label) {
-                <li>
-                  @if (item.comingSoon) {
-                    <span class="site-nav__mega-soon">Coming soon</span>
-                  } @else if (item.productSlug) {
-                    <a
-                      class="site-nav__mega-link"
-                      [routerLink]="['/lines', line.slug]"
-                      [fragment]="item.productSlug"
-                      (click)="closeMenu(true)"
-                    >
-                      <span class="site-nav__mega-link-title">{{ item.label }}</span>
-                      <span class="site-nav__mega-link-hint">View details</span>
-                    </a>
+          <div
+            class="site-nav__mega-inner"
+            [class.has-flyout]="!!flyoutItem()"
+          >
+            <div class="site-nav__mega-primary">
+              <ul class="site-nav__mega-list">
+                @for (item of menuItemsFor(line); track item.label) {
+                  <li>
+                    @if (item.comingSoon) {
+                      <span class="site-nav__mega-soon">Coming soon</span>
+                    } @else if (item.productSlug) {
+                      <a
+                        class="site-nav__mega-link"
+                        [routerLink]="['/lines', line.slug]"
+                        [fragment]="item.productSlug"
+                        (mouseenter)="clearFlyout()"
+                        (click)="closeMenu(true)"
+                      >
+                        <span class="site-nav__mega-link-title">{{ item.label }}</span>
+                      </a>
+                      @if (item.children?.length) {
+                        <ul class="site-nav__mega-children">
+                          @for (child of item.children; track child.label) {
+                            <li
+                              class="site-nav__mega-branch"
+                              [class.has-nested]="hasFlyout(child)"
+                              [class.is-active]="flyoutItem()?.productSlug === child.productSlug"
+                              (mouseenter)="openFlyout(child)"
+                            >
+                              @if (child.productSlug) {
+                                <a
+                                  class="site-nav__mega-child-link"
+                                  [routerLink]="['/lines', line.slug]"
+                                  [fragment]="child.productSlug"
+                                  (click)="closeMenu(true)"
+                                >
+                                  <span>{{ child.label }}</span>
+                                  @if (hasFlyout(child)) {
+                                    <span class="site-nav__mega-chevron" aria-hidden="true"
+                                      >›</span
+                                    >
+                                  }
+                                </a>
+                              }
+                            </li>
+                          }
+                        </ul>
+                      }
+                    }
+                  </li>
+                }
+              </ul>
+            </div>
+
+            @if (flyoutItem(); as flyout) {
+              <div
+                class="site-nav__mega-flyout"
+                [attr.aria-label]="flyoutLabel(flyout)"
+              >
+                <p class="site-nav__mega-flyout-label">{{ flyoutLabel(flyout) }}</p>
+                <ul class="site-nav__mega-flyout-list">
+                  @for (nested of flyoutEntries(flyout); track nested.label) {
+                    <li>
+                      @if (nested.productSlug) {
+                        <a
+                          class="site-nav__mega-flyout-link"
+                          [class.is-retired]="nested.retired"
+                          [routerLink]="['/lines', line.slug]"
+                          [fragment]="nested.productSlug"
+                          (click)="closeMenu(true)"
+                        >
+                          <span class="site-nav__mega-flyout-title">{{ nested.label }}</span>
+                          @if (nested.retired) {
+                            <span class="site-nav__mega-flyout-meta">Retired</span>
+                          }
+                        </a>
+                      }
+                    </li>
                   }
-                </li>
-              }
-            </ul>
+                </ul>
+              </div>
+            }
           </div>
         </div>
       }

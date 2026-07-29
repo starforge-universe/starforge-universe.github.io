@@ -81,6 +81,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Native hash scrolling / scrollIntoView — keep anchors clear of sticky nav. */
+  scroll-padding-top: 6.5rem;
 }
 
 html,
