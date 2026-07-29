@@ -148,6 +148,28 @@ export const PRODUCT_LINES: readonly ProductLine[] = [
   }
 ];
 
+export interface ProductNavMenuItem {
+  label: string;
+  /** Nested product slug — links to `/lines/:lineSlug#:productSlug`. */
+  productSlug?: string;
+  comingSoon?: boolean;
+}
+
 export function getProductLine(slug: string): ProductLine | undefined {
   return PRODUCT_LINES.find((line) => line.slug === slug);
+}
+
+/**
+ * Mega-menu entries for a product line. Nested `products` become links;
+ * lines without products show a Coming soon placeholder.
+ */
+export function getNavMenuItems(line: ProductLine): readonly ProductNavMenuItem[] {
+  if (line.products?.length) {
+    return line.products.map((product) => ({
+      label: product.name,
+      productSlug: product.slug
+    }));
+  }
+
+  return [{ label: 'Coming soon', comingSoon: true }];
 }

@@ -1,33 +1,81 @@
-<header class="site-nav" role="banner">
-  <a class="site-nav__brand" routerLink="/" aria-label="Starforge Universe home">
-    <span class="site-nav__mark" aria-hidden="true"></span>
-    <span class="site-nav__name">Starforge Universe</span>
-  </a>
+<header
+  class="site-nav"
+  role="banner"
+  (mouseleave)="scheduleClose()"
+  (mouseenter)="cancelClose()"
+>
+  <div class="site-nav__bar">
+    <a class="site-nav__brand" routerLink="/" aria-label="Starforge Universe home">
+      <span class="site-nav__mark" aria-hidden="true"></span>
+      <span class="site-nav__name">Starforge Universe</span>
+    </a>
 
-  <nav class="site-nav__links" aria-label="Product lines">
-    @for (line of productLines; track line.slug) {
-      <a
-        class="site-nav__link"
-        [routerLink]="['/lines', line.slug]"
-        routerLinkActive="is-active"
+    <nav class="site-nav__links" aria-label="Product lines">
+      @for (line of productLines; track line.slug) {
+        <a
+          class="site-nav__link"
+          [class.is-open]="isTriggerOpen(line.slug)"
+          [routerLink]="['/lines', line.slug]"
+          routerLinkActive="is-active"
+          [attr.aria-expanded]="isTriggerOpen(line.slug)"
+          aria-haspopup="true"
+          (mouseenter)="openMenu(line.slug)"
+          (focus)="openMenu(line.slug)"
+          (click)="onTriggerClick($event, line.slug)"
+        >
+          {{ line.shortName }}
+        </a>
+      }
+    </nav>
+
+    <div class="site-nav__actions">
+      <button
+        type="button"
+        class="site-nav__theme"
+        (click)="themeService.toggle()"
+        [attr.aria-label]="
+          themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
+        "
       >
-        {{ line.shortName }}
-      </a>
-    }
-  </nav>
+        <span class="site-nav__theme-label">
+          {{ themeService.theme() === 'dark' ? 'Light' : 'Dark' }}
+        </span>
+      </button>
+    </div>
+  </div>
 
-  <div class="site-nav__actions">
-    <button
-      type="button"
-      class="site-nav__theme"
-      (click)="themeService.toggle()"
-      [attr.aria-label]="
-        themeService.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
-      "
-    >
-      <span class="site-nav__theme-label">
-        {{ themeService.theme() === 'dark' ? 'Light' : 'Dark' }}
-      </span>
-    </button>
+  <div
+    class="site-nav__mega"
+    [class.is-open]="megaOpen()"
+    [attr.aria-hidden]="!megaOpen()"
+  >
+    <div class="site-nav__mega-clip">
+      @if (activeLine(); as line) {
+        <div class="site-nav__mega-panel" (mouseenter)="cancelClose()">
+          <div class="site-nav__mega-inner">
+            <p class="site-nav__mega-label">{{ line.shortName }}</p>
+            <ul class="site-nav__mega-list">
+              @for (item of menuItemsFor(line); track item.label) {
+                <li>
+                  @if (item.comingSoon) {
+                    <span class="site-nav__mega-soon">Coming soon</span>
+                  } @else if (item.productSlug) {
+                    <a
+                      class="site-nav__mega-link"
+                      [routerLink]="['/lines', line.slug]"
+                      [fragment]="item.productSlug"
+                      (click)="closeMenu(true)"
+                    >
+                      <span class="site-nav__mega-link-title">{{ item.label }}</span>
+                      <span class="site-nav__mega-link-hint">View details</span>
+                    </a>
+                  }
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
   </div>
 </header>
