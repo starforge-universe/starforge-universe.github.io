@@ -12,6 +12,7 @@ import { filter } from 'rxjs/operators';
 import {
   PRODUCT_LINES,
   ProductLine,
+  ProductNavMenuItem,
   getNavMenuItems,
   getProductLine
 } from '../../data/product-lines';
@@ -36,6 +37,8 @@ export class SiteNavComponent {
   readonly panelSlug = signal<string | null>(null);
   /** Drives the roll-down open/closed animation. */
   readonly megaOpen = signal(false);
+  /** Nested templates shown in the right-hand flyout (hover parent). */
+  readonly flyoutItem = signal<ProductNavMenuItem | null>(null);
 
   readonly activeLine = computed(() => {
     const slug = this.panelSlug();
@@ -64,13 +67,42 @@ export class SiteNavComponent {
 
   openMenu(slug: string): void {
     this.cancelClose();
+    if (this.panelSlug() !== slug) {
+      this.flyoutItem.set(null);
+    }
     this.panelSlug.set(slug);
     this.megaOpen.set(true);
+  }
+
+  openFlyout(item: ProductNavMenuItem): void {
+    this.cancelClose();
+    if (item.children?.length || item.composedOf?.length) {
+      this.flyoutItem.set(item);
+    } else {
+      this.flyoutItem.set(null);
+    }
+  }
+
+  flyoutEntries(item: ProductNavMenuItem): readonly ProductNavMenuItem[] {
+    return item.composedOf?.length ? item.composedOf : (item.children ?? []);
+  }
+
+  flyoutLabel(item: ProductNavMenuItem): string {
+    return item.composedOf?.length ? 'Composed from' : item.label;
+  }
+
+  hasFlyout(item: ProductNavMenuItem): boolean {
+    return !!(item.children?.length || item.composedOf?.length);
+  }
+
+  clearFlyout(): void {
+    this.flyoutItem.set(null);
   }
 
   closeMenu(immediate = false): void {
     this.cancelClose();
     this.megaOpen.set(false);
+    this.flyoutItem.set(null);
 
     if (immediate) {
       this.panelSlug.set(null);

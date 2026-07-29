@@ -5,6 +5,7 @@ import {
   HostListener,
   inject
 } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { SiteNavComponent } from './site-nav/site-nav.component';
 
@@ -18,6 +19,8 @@ export interface Star {
 }
 
 const PARALLAX_FACTOR = 0.28;
+/** Extra space below the sticky nav so fragment titles stay fully visible. */
+const NAV_SCROLL_GAP_PX = 20;
 
 @Component({
   selector: 'app-root',
@@ -28,10 +31,16 @@ const PARALLAX_FACTOR = 0.28;
 })
 export class AppComponent {
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly viewportScroller = inject(ViewportScroller);
 
   readonly stars: Star[] = this.generateStars();
   scrollY = 0;
   readonly parallaxFactor = PARALLAX_FACTOR;
+
+  constructor() {
+    // Angular's anchor scroller ignores CSS scroll-margin; offset by sticky nav height.
+    this.viewportScroller.setOffset(() => [0, this.navScrollOffset()]);
+  }
 
   @HostListener('window:scroll')
   onWindowScroll(): void {
@@ -40,6 +49,12 @@ export class AppComponent {
       this.scrollY = y;
       this.cdr.markForCheck();
     }
+  }
+
+  private navScrollOffset(): number {
+    const bar = document.querySelector('.site-nav__bar');
+    const height = bar?.getBoundingClientRect().height ?? 72;
+    return Math.ceil(height) + NAV_SCROLL_GAP_PX;
   }
 
   private generateStars(): Star[] {
