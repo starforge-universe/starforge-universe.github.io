@@ -22,7 +22,7 @@
           <h2 id="products-title">Tools</h2>
           <ul class="detail__products-list">
             @for (item of line.products; track item.slug) {
-              <li class="detail__product">
+              <li class="detail__product" [attr.id]="item.slug">
                 <div class="detail__product-header">
                   <span
                     class="detail__product-status"
