@@ -29,5 +29,6 @@ describe('HomeComponent', () => {
     expect(compiled.querySelectorAll('.lines__item').length).toBe(PRODUCT_LINES.length);
     expect(compiled.textContent).toContain('Starforge project templating');
     expect(compiled.textContent).toContain('All Seeing Eye');
+    expect(compiled.textContent).toContain('Utilities');
   });
 });

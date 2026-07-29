@@ -82,6 +82,99 @@
   margin: 3rem auto 0;
 }
 
+.detail__products {
+  max-width: 40rem;
+  margin: 0 auto 3rem;
+}
+
+.detail__products-eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sf-stage-eyebrow);
+}
+
+.detail__products > h2 {
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.45rem, 2.8vw, 1.9rem);
+}
+
+.detail__products-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.detail__product {
+  padding: 1.35rem 0 1.5rem;
+  border-top: 1px solid color-mix(in srgb, var(--sf-stage-text) 12%, transparent);
+}
+
+.detail__product-status {
+  display: inline-block;
+  margin-bottom: 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sf-stage-eyebrow);
+}
+
+.detail__product-status[data-status='building'] {
+  color: var(--sf-metal);
+}
+
+.detail__product h3 {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.4vw, 1.55rem);
+}
+
+.detail__product-tagline {
+  margin: 0.4rem 0 0;
+  font-weight: 600;
+  color: var(--sf-stage-text);
+}
+
+.detail__product-summary {
+  margin: 0.75rem 0 0;
+  color: var(--sf-stage-muted);
+  line-height: 1.7;
+}
+
+.detail__product-link {
+  display: inline-flex;
+  margin-top: 1rem;
+  font-weight: 650;
+  color: var(--sf-stage-eyebrow);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--sf-stage-eyebrow) 45%, transparent);
+}
+
+.detail__product-link:hover {
+  border-bottom-color: var(--sf-stage-eyebrow);
+}
+
+.detail__product-block {
+  margin-top: 1.25rem;
+}
+
+.detail__product-block h4 {
+  margin: 0;
+  font-family: var(--sf-font-display);
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.detail__product-block p {
+  margin: 0.45rem 0 0;
+  color: var(--sf-stage-muted);
+  line-height: 1.65;
+}
+
 .detail__cta {
   display: inline-flex;
   align-items: center;
