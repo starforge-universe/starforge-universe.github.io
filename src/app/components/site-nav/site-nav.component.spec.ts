@@ -27,6 +27,19 @@ describe('SiteNavComponent', () => {
       'Starforge Universe'
     );
     expect(compiled.querySelectorAll('.site-nav__links a').length).toBe(PRODUCT_LINES.length);
+    expect(compiled.querySelector('.site-nav__link--contact')?.textContent?.trim()).toBe(
+      'Contact'
+    );
+  });
+
+  it('should show contact email in the Contact mega panel', () => {
+    fixture.componentInstance.openMenu('contact');
+    fixture.detectChanges();
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('Happy to help');
+    expect(compiled.textContent).toContain('star.forge.worker@starforge-universe.com');
+    const mail = compiled.querySelector('.site-nav__contact-mail') as HTMLAnchorElement | null;
+    expect(mail?.getAttribute('href')).toBe('mailto:star.forge.worker@starforge-universe.com');
   });
 
   it('should show DevOps Template hierarchy for project templating mega menu', () => {

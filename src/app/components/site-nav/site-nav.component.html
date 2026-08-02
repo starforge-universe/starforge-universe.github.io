@@ -10,7 +10,7 @@
       <span class="site-nav__name">Starforge Universe</span>
     </a>
 
-    <nav class="site-nav__links" aria-label="Product lines">
+    <nav class="site-nav__links" aria-label="Primary">
       @for (line of productLines; track line.slug) {
         <a
           class="site-nav__link"
@@ -26,6 +26,19 @@
           {{ line.shortName }}
         </a>
       }
+
+      <button
+        type="button"
+        class="site-nav__link site-nav__link--contact"
+        [class.is-open]="isTriggerOpen(contactPanelSlug)"
+        [attr.aria-expanded]="isTriggerOpen(contactPanelSlug)"
+        aria-haspopup="true"
+        (mouseenter)="openMenu(contactPanelSlug)"
+        (focus)="openMenu(contactPanelSlug)"
+        (click)="onContactClick()"
+      >
+        Contact
+      </button>
     </nav>
 
     <div class="site-nav__actions">
@@ -50,7 +63,20 @@
     [attr.aria-hidden]="!megaOpen()"
   >
     <div class="site-nav__mega-clip">
-      @if (activeLine(); as line) {
+      @if (isContactPanel()) {
+        <div class="site-nav__mega-panel" (mouseenter)="cancelClose()">
+          <div class="site-nav__mega-inner site-nav__mega-inner--contact">
+            <p class="site-nav__contact-title">Happy to help</p>
+            <p class="site-nav__contact-copy">
+              Looking for more information about Starforge Universe? Send a note — we read every
+              message and will get back to you.
+            </p>
+            <a class="site-nav__contact-mail" [href]="'mailto:' + contactEmail">{{
+              contactEmail
+            }}</a>
+          </div>
+        </div>
+      } @else if (activeLine(); as line) {
         <div class="site-nav__mega-panel" (mouseenter)="cancelClose()">
           <div
             class="site-nav__mega-inner"

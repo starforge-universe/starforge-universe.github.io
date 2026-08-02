@@ -19,6 +19,8 @@ import {
 import { ThemeService } from '../../services/theme.service';
 
 const MEGA_CLOSE_MS = 320;
+const CONTACT_PANEL_SLUG = 'contact';
+const CONTACT_EMAIL = 'star.forge.worker@starforge-universe.com';
 
 @Component({
   selector: 'app-site-nav',
@@ -33,16 +35,23 @@ export class SiteNavComponent {
 
   readonly themeService = inject(ThemeService);
   readonly productLines = PRODUCT_LINES;
-  /** Which line’s menu content is rendered (kept briefly while closing). */
+  readonly contactPanelSlug = CONTACT_PANEL_SLUG;
+  readonly contactEmail = CONTACT_EMAIL;
+  /** Which panel’s content is rendered (product line slug or contact; kept briefly while closing). */
   readonly panelSlug = signal<string | null>(null);
   /** Drives the roll-down open/closed animation. */
   readonly megaOpen = signal(false);
   /** Nested templates shown in the right-hand flyout (hover parent). */
   readonly flyoutItem = signal<ProductNavMenuItem | null>(null);
 
+  readonly isContactPanel = computed(() => this.panelSlug() === CONTACT_PANEL_SLUG);
+
   readonly activeLine = computed(() => {
     const slug = this.panelSlug();
-    return slug ? getProductLine(slug) : undefined;
+    if (!slug || slug === CONTACT_PANEL_SLUG) {
+      return undefined;
+    }
+    return getProductLine(slug);
   });
 
   private closeTimer: ReturnType<typeof setTimeout> | null = null;
@@ -148,6 +157,14 @@ export class SiteNavComponent {
       this.openMenu(slug);
     } else {
       this.closeMenu(true);
+    }
+  }
+
+  onContactClick(): void {
+    if (this.isTriggerOpen(CONTACT_PANEL_SLUG)) {
+      this.closeMenu(true);
+    } else {
+      this.openMenu(CONTACT_PANEL_SLUG);
     }
   }
 }
