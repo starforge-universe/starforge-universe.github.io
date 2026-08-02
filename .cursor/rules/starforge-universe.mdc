@@ -23,7 +23,8 @@ Preserve this product and design concept in all UI, copy, and frontend changes.
 - Home: `''`. Product detail: `/lines/:slug`. Unknown slug: in-page missing state; unknown path: 404.
 - Use `routerLink` / `Router` + `withViewTransitions()` — never full document reloads for product selection.
 - Detail views always offer a clear **Back to universe** path.
-- Sticky nav uses an Apple-style full-width hover mega pane. Menu entries come from catalog nested `products`, or **Coming soon** when a line has none yet. Do not hard-code mega-menu rows in the template.
+- Sticky nav uses an Apple-style full-width hover mega pane. Menu entries come from catalog nested `products`, or **Coming soon** when a line has none yet. Do not hard-code mega-menu product rows in the template.
+- Nav also includes **Contact**, which opens a mega pane with a friendly invite to email `star.forge.worker@starforge-universe.com` (mailto link). Contact is not a product line.
 
 ## Product lines (extendable)
 
