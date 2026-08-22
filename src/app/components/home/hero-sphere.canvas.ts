@@ -8,7 +8,7 @@ export const HERO_SPHERE_GLITCH_SECONDS = 0.72;
 
 type SphereDisplayMode = 'solid' | 'wireframe' | 'blank';
 
-interface SphereDisplayState {
+export interface SphereDisplayState {
   mode: SphereDisplayMode;
   glitchActive: boolean;
 }
@@ -105,21 +105,10 @@ const LAT_SEGMENTS = 28;
 const LON_SEGMENTS = 36;
 const TILT_X = 0.42;
 const PERSPECTIVE = 3.6;
-/** Glow halo outer edge as a multiple of sphere radius — kept inside the canvas bounds. */
-const GLOW_OUTER_SCALE = 1.22;
+/** Match `.hero__core` / `.hero__planet` — full element radius (3D tilt reads slightly inset). */
+const WIREFRAME_RADIUS_SCALE = 1;
 /** Radians per second — shared by solid and wireframe so both phases spin at the same rate. */
 const ANGULAR_SPEED = (Math.PI * 1.35) / HERO_SPHERE_SOLID_SECONDS;
-
-let solidPixelBuffer: ImageData | null = null;
-let solidPixelBufferSize = 0;
-
-function getSolidPixelBuffer(ctx: CanvasRenderingContext2D, size: number): ImageData {
-  if (!solidPixelBuffer || solidPixelBufferSize !== size) {
-    solidPixelBuffer = ctx.createImageData(size, size);
-    solidPixelBufferSize = size;
-  }
-  return solidPixelBuffer;
-}
 
 function rotateX(point: Vec3, angle: number): Vec3 {
   const cos = Math.cos(angle);
@@ -161,80 +150,6 @@ function project(point: Vec3, centerX: number, centerY: number, radius: number):
     y: centerY - point.y * radius * depthScale,
     depth: point.z
   };
-}
-
-function shadeToRgb(shade: number): { r: number; g: number; b: number } {
-  const highlight = { r: 245, g: 252, b: 255 };
-  const mid = { r: 88, g: 152, b: 174 };
-  const shadow = { r: 36, g: 88, b: 104 };
-
-  const clamped = Math.max(0.5, Math.min(1, shade));
-  const mix = (from: number, to: number, t: number) => from + (to - from) * t;
-
-  if (clamped > 0.62) {
-    const t = (clamped - 0.62) / 0.38;
-    return {
-      r: Math.round(mix(mid.r, highlight.r, t)),
-      g: Math.round(mix(mid.g, highlight.g, t)),
-      b: Math.round(mix(mid.b, highlight.b, t))
-    };
-  }
-
-  const t = clamped / 0.62;
-  return {
-    r: Math.round(mix(shadow.r, mid.r, t)),
-    g: Math.round(mix(shadow.g, mid.g, t)),
-    b: Math.round(mix(shadow.b, mid.b, t))
-  };
-}
-
-function shadeSolidPixel(sx: number, sy: number, sz: number): { r: number; g: number; b: number } {
-  // View-fixed shading: curvature from the camera-facing hemisphere, not rotated normals.
-  const diffuse = 0.7 + sz * 0.22;
-  const specular =
-    Math.max(0, 1 - sx * sx * 5 - (sy - 0.05) * (sy - 0.05) * 8) ** 2 * 0.1;
-  return shadeToRgb(Math.min(1, diffuse + specular));
-}
-
-function drawSmoothSolidSphere(
-  ctx: CanvasRenderingContext2D,
-  centerX: number,
-  centerY: number,
-  radius: number
-): void {
-  const dpr = ctx.getTransform().a || 1;
-  const deviceRadius = radius * dpr;
-  const deviceCenterX = centerX * dpr;
-  const deviceCenterY = centerY * dpr;
-  const diameter = Math.max(2, Math.ceil(deviceRadius * 2));
-  const image = getSolidPixelBuffer(ctx, diameter);
-  const pixels = image.data;
-  const radiusSq = deviceRadius * deviceRadius;
-
-  for (let py = 0; py < diameter; py++) {
-    const dy = py + 0.5 - deviceRadius;
-    for (let px = 0; px < diameter; px++) {
-      const dx = px + 0.5 - deviceRadius;
-      const pixelIndex = (py * diameter + px) * 4;
-
-      if (dx * dx + dy * dy > radiusSq) {
-        pixels[pixelIndex + 3] = 0;
-        continue;
-      }
-
-      const sx = dx / deviceRadius;
-      const sy = dy / deviceRadius;
-      const sz = Math.sqrt(Math.max(0, 1 - sx * sx - sy * sy));
-      const rgb = shadeSolidPixel(sx, sy, sz);
-
-      pixels[pixelIndex] = rgb.r;
-      pixels[pixelIndex + 1] = rgb.g;
-      pixels[pixelIndex + 2] = rgb.b;
-      pixels[pixelIndex + 3] = 255;
-    }
-  }
-
-  ctx.putImageData(image, deviceCenterX - deviceRadius, deviceCenterY - deviceRadius);
 }
 
 function drawWireframeSphere(
@@ -289,7 +204,7 @@ function drawWireframeSphere(
   }
 }
 
-function resolveSphereLayout(width: number, height: number): {
+function resolveWireframeLayout(width: number, height: number): {
   centerX: number;
   centerY: number;
   radius: number;
@@ -297,32 +212,8 @@ function resolveSphereLayout(width: number, height: number): {
   const centerX = width / 2;
   const centerY = height / 2;
   const half = Math.min(width, height) / 2;
-  const radius = (half * 0.94) / GLOW_OUTER_SCALE;
+  const radius = half * WIREFRAME_RADIUS_SCALE;
   return { centerX, centerY, radius };
-}
-
-function drawGlow(
-  ctx: CanvasRenderingContext2D,
-  centerX: number,
-  centerY: number,
-  radius: number,
-  intensity = 1
-): void {
-  const glow = ctx.createRadialGradient(
-    centerX,
-    centerY,
-    radius * 0.2,
-    centerX,
-    centerY,
-    radius * GLOW_OUTER_SCALE
-  );
-  glow.addColorStop(0, `rgba(126, 182, 201, ${0.14 * intensity})`);
-  glow.addColorStop(1, 'rgba(126, 182, 201, 0)');
-
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, radius * GLOW_OUTER_SCALE, 0, Math.PI * 2);
-  ctx.fillStyle = glow;
-  ctx.fill();
 }
 
 function drawSignalGlitch(
@@ -361,25 +252,23 @@ export function drawHeroSphere(
   width: number,
   height: number,
   elapsedSeconds: number
-): void {
+): SphereDisplayState {
   ctx.clearRect(0, 0, width, height);
 
-  const { centerX, centerY, radius } = resolveSphereLayout(width, height);
+  const { centerX, centerY, radius } = resolveWireframeLayout(width, height);
   const cycleTime = elapsedSeconds % HERO_SPHERE_CYCLE_SECONDS;
   const rotY = elapsedSeconds * ANGULAR_SPEED;
   const display = resolveSphereDisplay(cycleTime, elapsedSeconds);
 
-  drawGlow(ctx, centerX, centerY, radius, display.glitchActive ? 0.72 : 1);
+  if (display.mode === 'solid') {
+    return display;
+  }
 
   if (display.mode === 'blank') {
     drawSignalGlitch(ctx, centerX, centerY, radius, elapsedSeconds);
-    return;
-  }
-
-  if (display.mode === 'solid') {
-    drawSmoothSolidSphere(ctx, centerX, centerY, radius);
-    return;
+    return display;
   }
 
   drawWireframeSphere(ctx, centerX, centerY, radius, rotY);
+  return display;
 }
