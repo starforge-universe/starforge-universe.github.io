@@ -45,8 +45,24 @@ Preserve this product and design concept in all UI, copy, and frontend changes.
 3. Product lines — catalog-driven list linking to details.
 4. Closing — quiet invitation; universe still expanding.
 
+## Hero visual (orbit + canvas sphere)
+
+The hero right column is a **deep-space focal object**: CSS orbit rings plus a **canvas-rendered 3D sphere** in `.hero__core` (not a CSS gradient disc or static image).
+
+- **Layout:** `.hero__visual` holds two animated `.hero__orbit` ellipses and `.hero__core` with `.hero__sphere-canvas`. Keep copy in `.hero__content`; do not overlay cards, badges, or promo chips on the sphere.
+- **Renderer:** [`src/app/components/home/hero-sphere.canvas.ts`](src/app/components/home/hero-sphere.canvas.ts) owns draw logic; [`src/app/components/home/home.component.ts`](src/app/components/home/home.component.ts) owns the rAF loop, `ResizeObserver`, and canvas sizing.
+- **Cycle (20s, repeating):** **15s solid** globe → **5s wireframe** mesh. Both phases share the same Y-axis spin rate so rotation never jumps at transitions.
+- **Phase transitions:** brief **TV signal-loss glitch** (solid / wireframe / blank flicker + scan lines) centered on each phase change. Keep glitch short and cinematic — not a loading spinner.
+- **Solid phase:** smooth per-pixel sphere with **view-fixed front/camera lighting** (curvature + soft center specular). It must read as a lit 3D globe without a rotating dark hemisphere or side-biased highlight. Do not reintroduce back-face culling holes or strong directional lights tied to rotated normals.
+- **Wireframe phase:** **lines only** — no solid body fill under the mesh. Lat/lon grid uses the same 3D projection/tilt as the solid shape.
+- **Palette:** cool starlight / teal-metal (`rgba(168, 212, 224, …)` strokes, teal solid fill, soft outer glow). No purple glow defaults.
+- **Glow:** radial halo must stay **inside the canvas bounds** (no square clip artifact). `.hero__core` uses `border-radius: 50%` and `overflow: hidden`.
+- **Retina / DPR:** pass **logical** canvas size into `drawHeroSphere`; vector draws use the context transform, `putImageData` uses device pixels explicitly.
+- **Motion accessibility:** when `prefers-reduced-motion: reduce`, render one static solid frame — no cycle, glitch, or spin.
+
 ## Do not
 
 - Replace the hybrid cosmic/stage system with a generic dashboard or purple-gradient AI look.
 - Put cards, badges, or promo chips on top of hero media.
+- Replace the hero canvas sphere with a flat CSS circle, faceted mesh solid, or image that loses the solid/wireframe cycle.
 - Duplicate product copy outside the catalog when the catalog already owns it.
