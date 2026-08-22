@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PRODUCT_LINES } from '../../data/product-lines';
+import { drawHeroSphere } from './hero-sphere.canvas';
 
 @Component({
   selector: 'app-home',
@@ -19,10 +20,29 @@ import { PRODUCT_LINES } from '../../data/product-lines';
 export class HomeComponent implements AfterViewInit, OnDestroy {
   private readonly host = inject(ElementRef<HTMLElement>);
   private observer?: IntersectionObserver;
+  private canvas?: HTMLCanvasElement;
+  private ctx?: CanvasRenderingContext2D | null;
+  private resizeObserver?: ResizeObserver;
+  private animationFrame?: number;
+  private startTime = 0;
+  private reduceMotion = false;
 
   readonly productLines = PRODUCT_LINES;
 
   ngAfterViewInit(): void {
+    this.initRevealObserver();
+    this.initSphereCanvas();
+  }
+
+  ngOnDestroy(): void {
+    this.observer?.disconnect();
+    this.resizeObserver?.disconnect();
+    if (this.animationFrame !== undefined) {
+      cancelAnimationFrame(this.animationFrame);
+    }
+  }
+
+  private initRevealObserver(): void {
     if (typeof IntersectionObserver === 'undefined') {
       return;
     }
@@ -43,7 +63,62 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     nodes.forEach((node: Element) => this.observer?.observe(node));
   }
 
-  ngOnDestroy(): void {
-    this.observer?.disconnect();
+  private initSphereCanvas(): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    this.canvas = this.host.nativeElement.querySelector(
+      '.hero__sphere-canvas'
+    ) as HTMLCanvasElement | null ?? undefined;
+
+    if (!this.canvas) {
+      return;
+    }
+
+    this.ctx = this.canvas.getContext('2d');
+    if (!this.ctx) {
+      return;
+    }
+
+    this.reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.startTime = performance.now();
+    this.resizeCanvas();
+
+    if (typeof ResizeObserver !== 'undefined') {
+      this.resizeObserver = new ResizeObserver(() => this.resizeCanvas());
+      this.resizeObserver.observe(this.canvas);
+    }
+
+    if (this.reduceMotion) {
+      drawHeroSphere(this.ctx, this.canvas.width, this.canvas.height, 0);
+      return;
+    }
+
+    const render = (now: number) => {
+      if (!this.canvas || !this.ctx) {
+        return;
+      }
+
+      const elapsedSeconds = (now - this.startTime) / 1000;
+      drawHeroSphere(this.ctx, this.canvas.width, this.canvas.height, elapsedSeconds);
+      this.animationFrame = requestAnimationFrame(render);
+    };
+
+    this.animationFrame = requestAnimationFrame(render);
+  }
+
+  private resizeCanvas(): void {
+    if (!this.canvas || !this.ctx) {
+      return;
+    }
+
+    const rect = this.canvas.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height, 1);
+    const dpr = window.devicePixelRatio || 1;
+
+    this.canvas.width = Math.round(size * dpr);
+    this.canvas.height = Math.round(size * dpr);
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 }

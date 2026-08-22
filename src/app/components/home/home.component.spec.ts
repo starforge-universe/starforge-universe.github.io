@@ -26,6 +26,7 @@ describe('HomeComponent', () => {
   it('should render brand and product lines from the catalog', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.hero__brand')?.textContent?.trim()).toBe('Starforge Universe');
+    expect(compiled.querySelector('.hero__sphere-canvas')).toBeTruthy();
     expect(compiled.querySelectorAll('.lines__item').length).toBe(PRODUCT_LINES.length);
     expect(compiled.textContent).toContain('Starforge project templating');
     expect(compiled.textContent).toContain('All Seeing Eye');
