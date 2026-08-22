@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PRODUCT_LINES } from '../../data/product-lines';
-import { drawHeroSphere } from './hero-sphere.canvas';
+import { drawHeroSphere, type SphereDisplayState } from './hero-sphere.canvas';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +21,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   private readonly host = inject(ElementRef<HTMLElement>);
   private observer?: IntersectionObserver;
   private canvas?: HTMLCanvasElement;
+  private heroCore?: HTMLElement;
   private ctx?: CanvasRenderingContext2D | null;
   private resizeObserver?: ResizeObserver;
   private animationFrame?: number;
@@ -72,6 +73,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.canvas = this.host.nativeElement.querySelector(
       '.hero__sphere-canvas'
     ) as HTMLCanvasElement | null ?? undefined;
+    this.heroCore = this.host.nativeElement.querySelector('.hero__core') ?? undefined;
 
     if (!this.canvas) {
       return;
@@ -92,7 +94,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     }
 
     if (this.reduceMotion) {
-      drawHeroSphere(this.ctx, this.canvasLogicalSize, this.canvasLogicalSize, 0);
+      this.syncHeroDisplay(drawHeroSphere(this.ctx, this.canvasLogicalSize, this.canvasLogicalSize, 0));
       return;
     }
 
@@ -102,12 +104,13 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       }
 
       const elapsedSeconds = (now - this.startTime) / 1000;
-      drawHeroSphere(
+      const display = drawHeroSphere(
         this.ctx,
         this.canvasLogicalSize,
         this.canvasLogicalSize,
         elapsedSeconds
       );
+      this.syncHeroDisplay(display);
       this.animationFrame = requestAnimationFrame(render);
     };
 
@@ -127,5 +130,18 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     this.canvas.width = Math.round(size * dpr);
     this.canvas.height = Math.round(size * dpr);
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  private syncHeroDisplay(display: SphereDisplayState): void {
+    const core = this.heroCore;
+    if (!core) {
+      return;
+    }
+
+    const showPlanet = display.mode === 'solid';
+    const showCanvas = display.mode === 'wireframe' || display.mode === 'blank';
+
+    core.classList.toggle('hero__core--css-planet', showPlanet);
+    core.classList.toggle('hero__core--canvas-active', showCanvas);
   }
 }
