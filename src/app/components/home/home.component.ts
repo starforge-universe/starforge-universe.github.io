@@ -26,6 +26,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   private animationFrame?: number;
   private startTime = 0;
   private reduceMotion = false;
+  private canvasLogicalSize = 1;
 
   readonly productLines = PRODUCT_LINES;
 
@@ -91,7 +92,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     }
 
     if (this.reduceMotion) {
-      drawHeroSphere(this.ctx, this.canvas.width, this.canvas.height, 0);
+      drawHeroSphere(this.ctx, this.canvasLogicalSize, this.canvasLogicalSize, 0);
       return;
     }
 
@@ -101,7 +102,12 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       }
 
       const elapsedSeconds = (now - this.startTime) / 1000;
-      drawHeroSphere(this.ctx, this.canvas.width, this.canvas.height, elapsedSeconds);
+      drawHeroSphere(
+        this.ctx,
+        this.canvasLogicalSize,
+        this.canvasLogicalSize,
+        elapsedSeconds
+      );
       this.animationFrame = requestAnimationFrame(render);
     };
 
@@ -117,6 +123,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     const size = Math.max(rect.width, rect.height, 1);
     const dpr = window.devicePixelRatio || 1;
 
+    this.canvasLogicalSize = size;
     this.canvas.width = Math.round(size * dpr);
     this.canvas.height = Math.round(size * dpr);
     this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
