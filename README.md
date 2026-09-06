@@ -27,7 +27,7 @@ Run `npm run build` to build the project. The build artifacts will be stored in 
 
 ## Running unit tests
 
-Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github.io). Tests run with ChromeHeadless, watch mode disabled, and code coverage enabled.
+Run `npm test` to execute the unit tests via [Vitest](https://vitest.dev) (`@angular/build:unit-test`). Tests run with watch mode disabled and code coverage enabled.
 
 ## Linting
 
