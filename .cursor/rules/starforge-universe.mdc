@@ -13,7 +13,7 @@ Preserve this product and design concept in all UI, copy, and frontend changes.
 - Tone: Apple-style scroll storytelling — sparse sections, one job per section, large expressive type.
 - Hybrid visual system: cinematic **deep-space hero** + quieter **light paper stage** content sections.
 - Support **dark and light** themes (`data-theme` on `html`, `ThemeService`, persisted). Both modes must remain viable.
-- Fonts: Syne (display) + Manrope (body). Do not switch to Inter/Roboto/Arial/system stacks.
+- Fonts: Sora (display) + Manrope (body). Do not switch to Inter/Roboto/Arial/system stacks.
 - Accents: cool starlight / teal-metal — not purple glow defaults. On light stages, use dark stage eyebrow tokens (`--sf-stage-eyebrow`) for contrast.
 - Motion: ambient stars/parallax, scroll reveals, route view transitions. Prefer `opacity`/`transform`; honor `prefers-reduced-motion`.
 
