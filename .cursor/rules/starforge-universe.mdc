@@ -1,68 +1,153 @@
 ---
-description: Starforge Universe brand, storytelling UX, and product-catalog conventions
+description: Portable Starforge design language — hybrid cinematic storytelling UI system
 alwaysApply: true
 ---
 
-# Starforge Universe site concept
+# Starforge design language
 
-Preserve this product and design concept in all UI, copy, and frontend changes.
+A reusable visual and UX system for brand-led product sites. Carry these principles into other web projects to reproduce the same look and feel. Token names may be prefixed per project (this repo uses `--sf-*`); the roles matter more than the prefix.
 
-## Brand and storytelling
+## Intent
 
-- Brand name: **Starforge Universe** (hero-level, not only nav text).
-- Tone: Apple-style scroll storytelling — sparse sections, one job per section, large expressive type.
-- Hybrid visual system: cinematic **deep-space hero** + quieter **light paper stage** content sections.
-- Support **dark and light** themes (`data-theme` on `html`, `ThemeService`, persisted). Both modes must remain viable.
-- Fonts: Sora (display) + Manrope (body). Do not switch to Inter/Roboto/Arial/system stacks.
-- Accents: cool starlight / teal-metal — not purple glow defaults. On light stages, use dark stage eyebrow tokens (`--sf-stage-eyebrow`) for contrast.
-- Motion: ambient stars/parallax, scroll reveals, route view transitions. Prefer `opacity`/`transform`; honor `prefers-reduced-motion`.
+- **Tone:** Apple-style scroll storytelling — sparse sections, one job per section, large expressive type, quiet confidence.
+- **Hybrid atmosphere:** Cinematic **deep-space** surfaces for hero/brand moments + quieter **light paper stage** surfaces for reading and explanation.
+- **Brand first:** On branded pages, the brand or product name is a hero-level signal, not only nav text. The first viewport should still read as the brand after removing the nav.
+- **No dashboard default:** Prefer one composition per viewport over card grids, stat strips, and admin chrome.
 
-## Navigation (no page-load feel)
+## Composition
 
-- Keep app shell (ambient background + sticky nav) mounted across routes.
-- Home: `''`. Product detail: `/lines/:slug`. Unknown slug: in-page missing state; unknown path: 404.
-- Use `routerLink` / `Router` + `withViewTransitions()` — never full document reloads for product selection.
-- Detail views always offer a clear **Back to universe** path.
-- Sticky nav uses an Apple-style full-width hover mega pane. Menu entries come from catalog nested `products`, or **Coming soon** when a line has none yet. Do not hard-code mega-menu product rows in the template.
-- Nav also includes **Contact**, which opens a mega pane with a friendly invite to email `star.forge.worker@starforge-universe.com` (mailto link). Contact is not a product line.
+### First viewport (hero)
 
-## Product lines (extendable)
+Usually contain only:
 
-- Single source of truth: [`src/app/data/product-lines.ts`](src/app/data/product-lines.ts).
-- To add a product line, **only add a catalog entry** (slug, name, tagline, summary, status, story blocks). Home list and nav must stay data-driven — do not hard-code product rows in templates.
-- Category lines (for example Utilities) may include nested `products`. Add tools there to extend the category without new hard-coded UI.
-- Hierarchical catalogs use nested `children` (for example DevOps Template → stack templates → language archetypes). Mega menu and detail pages must render hierarchy from data. Deeper nested templates appear in a right-hand mega flyout on hover of their parent. Composition products use `composedOf` (slugs of peer templates) and show a **Composed from** flyout / detail section instead of duplicating those templates as children.
-- Status may be `available`, `building`, or `retired` (retired archetypes stay listed but must not be oversold).
-- Current lines:
-  - `project-templating` — Starforge project templating (available): `devops-template` at the top with children `spring-template` (→ spring-library/service/application + retired spring-function), `terraform-template`, `angular-webapp-template`, `python-function-template`, `app-tap-template` (composed from terraform + angular-webapp + python-function), `database-template`, `library-template` (→ python-library-template). Composition products use `composedOf` slugs (not duplicated `children`).
-  - `all-seeing-eye` — All Seeing Eye (building): discoverability and monitoring of codebase state across a project universe; dependencies/integrations for compliance; architectural overview of GitHub repos. Frame as in progress / growing — do not oversell.
-  - `utilities` — Utilities (available): category of developer productivity tools. Nested `products` grow this line; first tool is LiquiSketch (Liquibase changelogs → Draw.io schema diagrams). Add more utilities via `products`, not hard-coded templates.
+1. Brand (display weight)
+2. One headline
+3. One short supporting sentence
+4. One CTA group (primary + optional ghost)
+5. One dominant visual focal object
 
-## Home section order
+Do **not** put product grids, stats, schedules, promo chips, badges, or secondary marketing blocks in the first viewport.
 
-1. Hero — brand, one headline, one lead, one CTA group; no product grid in the first viewport.
-2. Introduction — what Starforge Universe is.
-3. Product lines — catalog-driven list linking to details.
-4. Closing — quiet invitation; universe still expanding.
+### Section rhythm
 
-## Hero visual (orbit + planet)
+- **One job per section:** one purpose, one headline, usually one short supporting sentence.
+- Alternate or sequence **space hero** → **paper stage** → **space list/detail** as needed; keep contrast intentional.
+- Prefer full-bleed atmospheric planes over inset media cards.
+- Default: **no cards**. Cards only when they are the container for a clear interaction. If removing border/shadow/radius does not hurt understanding, do not use a card.
+- Detail views always offer a clear path back to the primary landing (“Back to …”).
 
-The hero right column is a **deep-space focal object**: CSS orbit rings plus a **static CSS planet** and a **canvas overlay** for wireframe and glitch phases.
+### Navigation shell
 
-- **Layout:** `.hero__visual` holds two animated `.hero__orbit` ellipses and `.hero__core` with `.hero__planet` (CSS) and `.hero__sphere-canvas` (overlay). Keep copy in `.hero__content`; do not overlay cards, badges, or promo chips on the sphere.
-- **Solid phase:** original **static CSS radial-gradient planet** in `.hero__planet` (`radial-gradient` at 30% 30%, white → teal → deep teal, soft edge fade). It does **not** rotate.
-- **Canvas renderer:** [`src/app/components/home/hero-sphere.canvas.ts`](src/app/components/home/hero-sphere.canvas.ts) draws **wireframe**, **glitch**, and glow only; [`src/app/components/home/home.component.ts`](src/app/components/home/home.component.ts) toggles `.hero__core--css-planet` from `drawHeroSphere` display state.
-- **Cycle (20s, repeating):** **15s solid** CSS planet → **5s wireframe** mesh. Wireframe keeps Y-axis spin; solid phase stays static.
-- **Phase transitions:** brief **TV signal-loss glitch** (solid / wireframe / blank flicker + scan lines) centered on each phase change. Keep glitch short and cinematic — not a loading spinner.
-- **Wireframe phase:** **lines only** — hide `.hero__planet`, show canvas only. Lat/lon grid radius matches `.hero__core` (`WIREFRAME_RADIUS_SCALE = 1`); no canvas glow layer. Only one of planet or canvas is visible at a time (including glitch frames).
-- **Palette:** cool starlight / teal-metal (`rgba(168, 212, 224, …)` strokes, teal CSS planet, soft canvas glow in wireframe). No purple glow defaults.
-- **Glow:** baked into the CSS planet gradient; do not add a separate canvas glow that changes perceived size.
-- **Retina / DPR:** pass **logical** canvas size into `drawHeroSphere`; vector draws use the context transform.
-- **Motion accessibility:** when `prefers-reduced-motion: reduce`, show the static CSS planet only — no cycle, glitch, or wireframe spin.
+- Keep an app shell (ambient background + sticky nav) mounted across in-app routes — no full document reload for primary navigation.
+- Prefer soft, full-width hover mega panes over dense dropdowns.
+- Menu content should be **data-driven**, not hard-coded product rows in templates.
 
-## Do not
+## Typography
 
-- Replace the hybrid cosmic/stage system with a generic dashboard or purple-gradient AI look.
-- Put cards, badges, or promo chips on top of hero media.
-- Replace the hero hybrid planet with a fully canvas-rendered solid sphere or drop the solid/wireframe cycle.
-- Duplicate product copy outside the catalog when the catalog already owns it.
+| Role | Font | Use |
+|------|------|-----|
+| Display | **Sora** | Brand, nav wordmark, headings |
+| Body | **Manrope** | Body copy, UI labels, leads |
+
+- Do **not** switch to Inter, Roboto, Arial, or system stacks.
+- Display headings: heavy weight (700–800), tight tracking (`letter-spacing: ~-0.03em` to `-0.04em`), short measure (`max-width` in `ch`).
+- Body: ~1.06–1.125rem, line-height ~1.55–1.7, muted secondary color for supporting copy.
+- **Eyebrows:** small caps-style labels — uppercase, wide tracking (`~0.14em`), semibold; use accent on dark surfaces and a darker stage-eyebrow token on light paper.
+
+## Color and atmosphere
+
+Cool **starlight / teal-metal** accents. Never default to purple-on-white, purple glow, or generic AI gradient themes.
+
+### Token roles (implement as CSS variables)
+
+| Token role | Purpose | Example dark | Example light / stage |
+|------------|---------|--------------|------------------------|
+| `bg` | Page void | `#07090f` | `#f3f0ea` |
+| `bg-elevated` | Raised surface | `#0e121c` | `#ffffff` |
+| `bg-stage` | Paper stage | `#f4f2ec` | `#ffffff` |
+| `text` / `text-muted` | Primary / secondary on void | `#e8ecf4` / ~68% alpha | `#12141a` / ~70% alpha |
+| `stage-text` / `stage-muted` | Copy on paper | `#12141a` / muted | same family |
+| `stage-eyebrow` | Labels on paper (must contrast) | `#1a4a58` | `#1f5565` |
+| `accent` / `accent-strong` | Teal starlight | `#7eb6c9` / `#a8d4e0` | `#2f6f82` / `#1f5565` |
+| `metal` | Secondary meta | `#9aa4b2` | `#5c6675` |
+| `border` / `border-strong` | Hairlines | low-alpha text | low-alpha ink |
+| `hero-gradient` | Deep-space plane | blue-black diagonal | same family, slightly lifted |
+| `stage-gradient` | Paper plane | warm off-white vertical | white → cream |
+
+### Themes
+
+- Support **dark and light** (`data-theme` on `html`, persisted). Both must remain viable.
+- Hero/media planes may stay deep-space even when the site chrome is light.
+- Focus rings: accent outline, visible offset.
+
+## Surfaces and controls
+
+- **Hero CTAs:** Pill radius (`border-radius: 999px`). Primary = light fill / dark ink on space; ghost = translucent border, no fill.
+- **List rows / interactive rows:** Soft radius (~1.1rem), thin border, elevated mix background; hover lifts slightly (`translateY`) and strengthens border — not heavy multi-layer shadows.
+- **Borders:** Prefer 1px low-alpha lines over thick frames.
+- Avoid rounded-full pill clusters, emoji decoration, and stacked drop shadows.
+
+## Motion
+
+- Prefer `opacity` and `transform` only.
+- Signature ease: `cubic-bezier(0.22, 1, 0.36, 1)`; duration ~220ms UI / ~480ms larger transitions.
+- Use ambient motion (parallax, slow orbits, scroll reveals) for presence — not noise.
+- Honor `prefers-reduced-motion: reduce`: disable loops, glitches, and non-essential animation; keep layout readable.
+- Route changes may use view transitions with the same ease/duration tokens.
+
+## Hero focal object (space emblem)
+
+The hero may include one **deep-space focal object** beside the copy (orbits + core). Pattern used here:
+
+- Soft elliptical **orbit rings** (teal hairline strokes, slow opposite-direction spin).
+- A **static solid core** (CSS radial planet: highlight at ~30% 30%, white → teal → deep teal, soft edge fade). Does not rotate.
+- Optional **wireframe phase** (canvas lat/lon mesh only): cool starlight strokes `rgba(168, 212, 224, …)`; matches core size; no body fill under the mesh.
+- Cycle example: long solid dwell → short wireframe; brief TV-style signal-loss glitch at transitions.
+- Mutual exclusivity: only one of solid core or wireframe canvas visible at a time.
+- No cards, badges, or promo chips overlaid on the focal object.
+- Glow belongs in the solid gradient itself — do not add a square-clipped halo that reads as a box.
+- When reducing motion: static solid core only.
+
+When porting: keep the *roles* (orbits + static lit core + optional wire mesh + short glitch). Exact timings and canvas files can differ.
+
+## Content voice
+
+- Sparse, precise, inviting — not salesy or oversold.
+- Prefer “building / growing / expanding” framing for unfinished work.
+- Status language stays quiet (e.g. available / building / retired) and does not dominate the layout.
+
+## Anti-patterns (do not)
+
+- Generic dashboard layouts or purple-gradient “AI product” defaults.
+- Warm cream + terracotta serif brochure clichés unless the brand explicitly requires them.
+- Broadsheet/newspaper dense columns as the default marketing layout.
+- Hero overlays: floating badges, stickers, chips, or callout boxes on media.
+- Replacing the hybrid space/paper system with a flat single-color app shell.
+- Hard-coding catalog or nav product rows when a data source already owns them.
+- Inter / Roboto / Arial / system UI font stacks for brand surfaces.
+
+## Porting checklist
+
+When applying this language to another project:
+
+1. Define CSS variables for the token roles above (any prefix).
+2. Load **Sora** + **Manrope** (or document an approved substitute pair that is still expressive and non-default).
+3. Implement `data-theme` dark/light with viable contrast on both void and paper stages.
+4. Build the first viewport as one composition: brand, headline, lead, CTAs, focal visual.
+5. Alternate space and paper sections; one job each.
+6. Wire sticky shell + in-app navigation without full reloads where the stack allows.
+7. Add motion with the shared ease; gate with `prefers-reduced-motion`.
+8. Keep accents in the teal-metal / starlight family unless the new brand explicitly remaps the accent role.
+
+---
+
+## This repository (Starforge Universe)
+
+Site-specific product and routing conventions for **this** codebase. When copying the design language elsewhere, leave this section behind or replace it with the target product’s IA.
+
+- Brand name: **Starforge Universe**.
+- Catalog source of truth: [`src/app/data/product-lines.ts`](src/app/data/product-lines.ts). Extend by catalog entry only.
+- Routes: home `''`; product detail `/lines/:slug`; unknown slug → in-page missing state; unknown path → 404. Use `routerLink` / `Router` + `withViewTransitions()`.
+- Sticky nav mega pane: nested catalog `products` / `children` / `composedOf`; **Coming soon** when empty. Contact mega pane → `mailto:star.forge.worker@starforge-universe.com` (not a product line).
+- Home section order: Hero → Introduction → Product lines → Closing.
+- Hero implementation: [`hero-sphere.canvas.ts`](src/app/components/home/hero-sphere.canvas.ts) + CSS `.hero__planet`; 15s solid / 5s wireframe; logical canvas size for DPR.
